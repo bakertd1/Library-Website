@@ -7,12 +7,7 @@ import { BookService } from './book.service';
 
 @Component({
   selector: 'lib-book-list',
-  templateUrl: './book-list.component.html',
-  styles: [`
-    .glyphicon-remove {
-      cursor: pointer;
-    }
-  `]
+  templateUrl: './book-list.component.html'
 })
 export class BookListComponent { 
   private books: Book[] = [];
