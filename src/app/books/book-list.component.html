@@ -4,12 +4,14 @@
       <tr>
         <th>Title</th>
         <th>Author</th>
+        <th>Delete</th>
       </tr>
     </thead>
     <tbody>
       <tr *ngFor="let book of books">
         <td>{{ book.title }}</td>
         <td>{{ book.author.firstName }} {{ book.author.lastName }}</td>
+        <td><span class="glyphicon glyphicon-remove" (click)="onDeleteClicked(book.id)"></span></td>
       </tr>
     </tbody>
   </table>

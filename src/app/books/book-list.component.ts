@@ -7,7 +7,12 @@ import { BookService } from './book.service';
 
 @Component({
   selector: 'lib-book-list',
-  templateUrl: './book-list.component.html'
+  templateUrl: './book-list.component.html',
+  styles: [`
+    .glyphicon-remove {
+      cursor: pointer;
+    }
+  `]
 })
 export class BookListComponent { 
   private books: Book[] = [];
@@ -20,6 +25,10 @@ export class BookListComponent {
     this.subscription = this.BookService.booksChanged.subscribe(
       (books: Book[]) => this.books = books
     );
+  }
+
+  onDeleteClicked(id: number) {
+    this.BookService.deleteBook(id);
   }
 
   ngOnDestroy() {
