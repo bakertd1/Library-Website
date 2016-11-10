@@ -12,6 +12,7 @@ import { BookListComponent } from './books/book-list.component';
 import { AuthorListComponent } from './authors/author-list.component';
 
 import { AuthorService } from './authors/author.service';
+import { BookService } from './books/book.service';
 
 import { routes } from './app.routes';
 
@@ -31,7 +32,7 @@ import { routes } from './app.routes';
     CollapseModule,
     routes
   ],
-  providers: [AuthorService],
+  providers: [AuthorService, BookService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
