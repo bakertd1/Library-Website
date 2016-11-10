@@ -4,6 +4,4 @@ import { Component } from '@angular/core';
   selector: 'lib-root',
   templateUrl: './app.component.html'
 })
-export class AppComponent {
-  title = 'lib works!';
-}
+export class AppComponent { }
