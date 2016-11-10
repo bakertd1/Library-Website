@@ -10,14 +10,16 @@ import { NavbarComponent } from './navbar/navbar.component';
 import { HomeComponent } from './home/home.component';
 import { BookListComponent } from './books/book-list.component';
 import { AuthorListComponent } from './authors/author-list.component';
-
-import { AuthorService } from './authors/author.service';
-import { BookService } from './books/book.service';
-
-import { routes } from './app.routes';
 import { AddAuthorComponent } from './authors/add-author/add-author.component';
 import { RequiredIconComponent } from './shared/required-icon/required-icon.component';
 import { AddBookComponent } from './books/add-book/add-book.component';
+import { LoginComponent } from './account/login/login.component';
+
+import { AuthorService } from './authors/author.service';
+import { BookService } from './books/book.service';
+import { AccountService } from './account/account.service';
+
+import { routes } from './app.routes';
 
 @NgModule({
   declarations: [
@@ -28,7 +30,8 @@ import { AddBookComponent } from './books/add-book/add-book.component';
     AuthorListComponent,
     AddAuthorComponent,
     RequiredIconComponent,
-    AddBookComponent
+    AddBookComponent,
+    LoginComponent
   ],
   imports: [
     BrowserModule,
@@ -38,7 +41,7 @@ import { AddBookComponent } from './books/add-book/add-book.component';
     CollapseModule,
     routes
   ],
-  providers: [AuthorService, BookService],
+  providers: [AuthorService, BookService, AccountService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
