@@ -40,4 +40,13 @@ export class AuthorService {
     );
   }
 
+  deleteAuthor(id: number) {
+    this.http.delete("http://localhost:50010/api/authors/" + id).subscribe(
+      (response: Response) => {
+        this.authors = this.authors.filter(e => e.id !== id);
+        this.authorsChanged.emit(this.authors);
+      }
+    );
+  }
+
 }

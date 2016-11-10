@@ -21,6 +21,10 @@ export class AuthorListComponent implements OnInit, OnDestroy {
     );
   }
 
+  onDeleteClicked(id: number) {
+    this.authorService.deleteAuthor(id);
+  }
+
   ngOnDestroy() {
     this.subscription.unsubscribe();
   }
