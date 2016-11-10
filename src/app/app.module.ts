@@ -17,6 +17,7 @@ import { BookService } from './books/book.service';
 import { routes } from './app.routes';
 import { AddAuthorComponent } from './authors/add-author/add-author.component';
 import { RequiredIconComponent } from './shared/required-icon/required-icon.component';
+import { AddBookComponent } from './books/add-book/add-book.component';
 
 @NgModule({
   declarations: [
@@ -26,7 +27,8 @@ import { RequiredIconComponent } from './shared/required-icon/required-icon.comp
     BookListComponent,
     AuthorListComponent,
     AddAuthorComponent,
-    RequiredIconComponent
+    RequiredIconComponent,
+    AddBookComponent
   ],
   imports: [
     BrowserModule,
