@@ -40,4 +40,13 @@ export class BookService {
     );
   }
 
+  deleteBook(id: number) {
+    this.http.delete("http://localhost:50010/api/books/" + id).subscribe(
+      (response: Response) => {
+        this.books = this.books.filter(e => e.id !== id);
+        this.booksChanged.emit(this.books);
+      }
+    );
+  }
+
 }
