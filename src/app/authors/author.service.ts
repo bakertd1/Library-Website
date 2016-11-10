@@ -22,4 +22,22 @@ export class AuthorService {
     );
   }
 
+  addAuthor(author: Author) {
+    const body = JSON.stringify(author);
+    const headers = new Headers({
+      'Content-Type': 'application/json'
+    });
+
+    this.http.post("http://localhost:50010/api/authors", body, {
+      headers: headers
+    }).map( 
+      (data: Response) => data.json()
+    ).subscribe(
+      (data: Author) => {
+        this.authors.push(data);
+        this.authorsChanged.emit(this.authors);
+      }
+    );
+  }
+
 }

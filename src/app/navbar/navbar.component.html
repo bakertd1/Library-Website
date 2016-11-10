@@ -14,10 +14,10 @@
     <!-- Collect the nav links, forms, and other content for toggling -->
     <div class="collapse navbar-collapse" [collapse]="isCollapsed">
       <ul class="nav navbar-nav">
-        <li routerLinkActive="active"><a [routerLink]=" ['/books'] ">View Books</a></li>
-        <li routerLinkActive="active"><a [routerLink]=" ['/authors'] ">View Authors</a></li>
+        <li routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }"><a [routerLink]=" ['/books'] ">View Books</a></li>
+        <li routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }"><a [routerLink]=" ['/authors'] ">View Authors</a></li>
         <li><a href="#">Add Book</a></li>
-        <li><a href="#">Add Author</a></li>
+        <li routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }"><a [routerLink]=" ['/authors/new'] ">Add Author</a></li>
       </ul>
       <ul class="nav navbar-nav navbar-right">
         <li dropdown class="dropdown">
