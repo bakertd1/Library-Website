@@ -11,6 +11,8 @@ import { HomeComponent } from './home/home.component';
 import { BookListComponent } from './books/book-list.component';
 import { AuthorListComponent } from './authors/author-list.component';
 
+import { AuthorService } from './authors/author.service';
+
 import { routes } from './app.routes';
 
 @NgModule({
@@ -29,7 +31,7 @@ import { routes } from './app.routes';
     CollapseModule,
     routes
   ],
-  providers: [],
+  providers: [AuthorService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

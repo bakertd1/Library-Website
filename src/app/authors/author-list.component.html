@@ -1,3 +1,19 @@
-<p>
-  author-list works!
-</p>
+<div class="table-responsive">
+  <table class="table table-striped table-hover">
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Date of Birth</th>
+        <th>Date of Death</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let author of authors">
+        <td>{{ author.firstName}} {{ author.lastName }}</td>
+        <td>{{ author.birthdate | date }}</td>
+        <td *ngIf="author.deathdate !== null">{{ author.deathdate | date }}</td>
+        <td *ngIf="author.deathdate === null">Still Alive</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
