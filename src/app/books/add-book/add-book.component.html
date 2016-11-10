@@ -1,0 +1,83 @@
+<form #f="ngForm" (ngSubmit)="onSubmit(f.value)">
+    <div class="form-group">
+        <label for="title">Title<lib-required-icon></lib-required-icon></label>
+        <input 
+            id="title" 
+            name="title" 
+            type="text" 
+            class="form-control" 
+            placeholder="Title" 
+            ngModel
+            #title="ngModel"
+            required
+        >
+        <div class="alert alert-danger" *ngIf="title.touched && !title.valid">
+            Title is required.
+        </div>
+    </div>
+    <div class="form-group">
+        <label for="authorsSelectBox">Author<lib-required-icon></lib-required-icon></label>
+        <select 
+            name="authorId" 
+            id="authorsSelectBox" 
+            class="form-control"
+            ngModel
+            #authorId="ngModel"
+            required
+        >
+            <option *ngFor="let author of authors" [value]="author.id">{{ author.firstName }} {{ author.lastName }}</option>
+        </select>
+        <div class="alert alert-danger" *ngIf="authorId.touched && !authorId.valid">
+            Author is required.
+        </div>
+    </div>
+    <div class="form-group">
+        <label for="publisher">Publisher<lib-required-icon></lib-required-icon></label>
+        <input 
+            type="text" 
+            name="publisher" 
+            id="publisher" 
+            class="form-control" 
+            placeholder="Publisher" 
+            ngModel
+            #publisher="ngModel"
+            required
+        >
+        <div class="alert alert-danger" *ngIf="publisher.touched && !publisher.valid">
+            Publisher is required.
+        </div>
+    </div>
+    <div class="form-group">
+        <label for="publicationDate">Publication Date<lib-required-icon></lib-required-icon></label>
+        <input 
+            type="date" 
+            name="publicationDate" 
+            id="publicationDate" 
+            class="form-control" 
+            placeholder="Publication Date" 
+            ngModel
+            #publicationDate="ngModel"
+            required
+        >
+        <div class="alert alert-danger" *ngIf="publicationDate.touched && !publicationDate.valid">
+            Publication Date is required.
+        </div>
+    </div>
+    <div class="form-group">
+        <label for="numberOfPages">Number of Pages<lib-required-icon></lib-required-icon></label>
+        <input 
+            type="number" 
+            name="numberOfPages" 
+            id="numberOfPages" 
+            class="form-control" 
+            placeholder="Number of Pages" 
+            ngModel
+            #numberOfPages="ngModel"
+            required
+        >
+        <div class="alert alert-danger" *ngIf="numberOfPages.touched && !numberOfPages.valid">
+            Number of Pages is required.
+        </div>
+    </div>
+    <button type="submit" class="btn btn-primary" [disabled]="!f.valid">Save</button>
+</form>

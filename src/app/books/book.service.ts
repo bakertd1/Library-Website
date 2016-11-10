@@ -22,4 +22,22 @@ export class BookService {
     );
   }
 
+  addBook(book: Book) {
+    const body = JSON.stringify(book);
+    const headers = new Headers({
+      'Content-Type': 'application/json'
+    });
+
+    this.http.post("http://localhost:50010/api/books", body, {
+      headers: headers
+    }).map(
+      (data: Response) => data.json()
+    ).subscribe(
+      (data: Book) => {
+        this.books.push(data);
+        this.booksChanged.emit(this.books);
+      }
+    );
+  }
+
 }
