@@ -9,20 +9,25 @@ import { AppComponent } from './app.component';
 import { NavbarComponent } from './navbar/navbar.component';
 import { HomeComponent } from './home/home.component';
 import { BookListComponent } from './books/book-list.component';
+import { AuthorListComponent } from './authors/author-list.component';
+
+import { routes } from './app.routes';
 
 @NgModule({
   declarations: [
     AppComponent,
     NavbarComponent,
     HomeComponent,
-    BookListComponent
+    BookListComponent,
+    AuthorListComponent
   ],
   imports: [
     BrowserModule,
     FormsModule,
     HttpModule,
     DropdownModule,
-    CollapseModule
+    CollapseModule,
+    routes
   ],
   providers: [],
   bootstrap: [AppComponent]

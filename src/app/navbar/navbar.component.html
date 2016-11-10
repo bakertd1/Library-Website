@@ -8,14 +8,14 @@
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
       </button>
-      <a class="navbar-brand" href="#">Home</a>
+      <a class="navbar-brand" [routerLink]=" ['/'] ">Home</a>
     </div>
 
     <!-- Collect the nav links, forms, and other content for toggling -->
     <div class="collapse navbar-collapse" [collapse]="isCollapsed">
       <ul class="nav navbar-nav">
-        <li><a href="#">View Books</a></li>
-        <li><a href="#">View Authors</a></li>
+        <li routerLinkActive="active"><a [routerLink]=" ['/books'] ">View Books</a></li>
+        <li routerLinkActive="active"><a [routerLink]=" ['/authors'] ">View Authors</a></li>
         <li><a href="#">Add Book</a></li>
         <li><a href="#">Add Author</a></li>
       </ul>
