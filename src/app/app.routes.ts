@@ -5,6 +5,7 @@ import { BookListComponent } from './books/book-list.component';
 import { AddBookComponent } from './books/add-book/add-book.component';
 import { AuthorListComponent } from './authors/author-list.component';
 import { AddAuthorComponent } from './authors/add-author/add-author.component';
+import { AuthorDetailsComponent } from './authors/author-details/author-details.component';
 import { LoginComponent } from './account/login/login.component';
 
 const APP_ROUTES: Routes = [
@@ -13,6 +14,7 @@ const APP_ROUTES: Routes = [
     { path: 'books/new', component: AddBookComponent },
     { path: 'authors', component: AuthorListComponent },
     { path: 'authors/new', component: AddAuthorComponent },
+    { path: 'authors/details/:id', component: AuthorDetailsComponent },
     { path: 'login', component: LoginComponent }
 ];
 
