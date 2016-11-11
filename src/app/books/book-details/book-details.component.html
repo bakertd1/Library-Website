@@ -1,0 +1,5 @@
+<h4>Title: {{ book.title }}</h4>
+<div>Author: <a [routerLink]=" ['/authors/details/', book.authorId] ">{{ book.author?.firstName }} {{ book.author?.lastName }}</a></div>
+<div>Publisher: {{ book.publisher }}</div>
+<div>Publication Date: {{ book.publicationDate | date }}</div>
+<div>Number of Pages: {{ book.numberOfPages }}</div>

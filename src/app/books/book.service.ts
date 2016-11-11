@@ -22,6 +22,16 @@ export class BookService {
     );
   }
 
+  getBook(id: number) {
+    this.http.get("http://localhost:50010/api/books/" + id).map(
+      (data: Response) => data.json()
+    ).subscribe(
+      (data: Book) => {
+        this.booksChanged.emit(data);
+      }
+    )
+  }
+
   addBook(book: Book) {
     const body = JSON.stringify(book);
     const headers = new Headers({
