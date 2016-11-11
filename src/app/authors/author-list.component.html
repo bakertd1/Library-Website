@@ -10,7 +10,7 @@
     </thead>
     <tbody>
       <tr *ngFor="let author of authors">
-        <td>{{ author.firstName}} {{ author.lastName }}</td>
+        <td><a [routerLink]=" ['/authors/details/', author.id] ">{{ author.firstName}} {{ author.lastName }}</a></td>
         <td>{{ author.birthdate | date }}</td>
         <td *ngIf="author.deathdate !== null">{{ author.deathdate | date }}</td>
         <td *ngIf="author.deathdate === null">Still Alive</td>
