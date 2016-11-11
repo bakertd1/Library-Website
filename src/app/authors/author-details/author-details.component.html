@@ -5,6 +5,6 @@ Birthdate: {{ author.birthdate | date }}
 <div *ngIf="books.length > 0">
   <h4>Books</h4>
   <ul class="list-group">
-    <li class="list-group-item" *ngFor="let book of books">{{ book.title }}</li>
+    <li class="list-group-item" *ngFor="let book of books"><a [routerLink]=" ['/books/details/', book.id] ">{{ book.title }}</a></li>
   </ul>
 </div>
