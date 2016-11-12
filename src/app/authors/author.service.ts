@@ -14,7 +14,11 @@ export class AuthorService {
   constructor(private http: Http) { }
 
   getAuthors() {
-    this.http.get("http://localhost:50010/api/authors").map(
+    const headers = new Headers({
+      'Authorization': 'bearer ' + localStorage.getItem('access_token')
+    });
+
+    this.http.get("http://localhost:50010/api/authors", { headers: headers }).map(
       (data: Response) => data.json()
     ).subscribe(
       (data: Author[]) => {
@@ -25,7 +29,11 @@ export class AuthorService {
   }
 
   getAuthor(id: number) {
-    this.http.get("http://localhost:50010/api/authors/" + id).map(
+    const headers = new Headers({
+      'Authorization': 'bearer ' + localStorage.getItem('access_token')
+    });
+
+    this.http.get("http://localhost:50010/api/authors/" + id, { headers: headers }).map(
       (data: Response) => data.json()
     ).subscribe(
       (data: Author) => {
@@ -37,7 +45,8 @@ export class AuthorService {
   addAuthor(author: Author) {
     const body = JSON.stringify(author);
     const headers = new Headers({
-      'Content-Type': 'application/json'
+      'Content-Type': 'application/json',
+      'Authorization': 'bearer ' + localStorage.getItem('access_token')
     });
 
     this.http.post("http://localhost:50010/api/authors", body, {
@@ -53,7 +62,11 @@ export class AuthorService {
   }
 
   deleteAuthor(id: number) {
-    this.http.delete("http://localhost:50010/api/authors/" + id).subscribe(
+    const headers = new Headers({
+      'Authorization': 'bearer ' + localStorage.getItem('access_token')
+    });
+
+    this.http.delete("http://localhost:50010/api/authors/" + id, { headers: headers }).subscribe(
       (response: Response) => {
         this.authors = this.authors.filter(e => e.id !== id);
         this.authorsChanged.emit(this.authors);

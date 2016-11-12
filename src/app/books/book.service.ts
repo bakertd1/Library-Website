@@ -12,7 +12,11 @@ export class BookService {
   constructor(private http: Http) { }
 
   getBooks() {
-    this.http.get("http://localhost:50010/api/books").map(
+    const headers = new Headers({
+      'Authorization': 'bearer ' + localStorage.getItem('access_token')
+    });
+
+    this.http.get("http://localhost:50010/api/books", { headers: headers }).map(
       (data: Response) => data.json()
     ).subscribe(
       (data: Book[]) => {
@@ -23,7 +27,11 @@ export class BookService {
   }
 
   getBook(id: number) {
-    this.http.get("http://localhost:50010/api/books/" + id).map(
+    const headers = new Headers({
+      'Authorization': 'bearer ' + localStorage.getItem('access_token')
+    });
+
+    this.http.get("http://localhost:50010/api/books/" + id, { headers: headers }).map(
       (data: Response) => data.json()
     ).subscribe(
       (data: Book) => {
@@ -35,7 +43,8 @@ export class BookService {
   addBook(book: Book) {
     const body = JSON.stringify(book);
     const headers = new Headers({
-      'Content-Type': 'application/json'
+      'Content-Type': 'application/json',
+      'Authorization': 'bearer ' + localStorage.getItem('access_token')
     });
 
     this.http.post("http://localhost:50010/api/books", body, {
@@ -51,7 +60,11 @@ export class BookService {
   }
 
   deleteBook(id: number) {
-    this.http.delete("http://localhost:50010/api/books/" + id).subscribe(
+    const headers = new Headers({
+      'Authorization': 'bearer ' + localStorage.getItem('access_token')
+    });
+
+    this.http.delete("http://localhost:50010/api/books/" + id, { headers: headers }).subscribe(
       (response: Response) => {
         this.books = this.books.filter(e => e.id !== id);
         this.booksChanged.emit(this.books);

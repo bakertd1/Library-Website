@@ -22,13 +22,17 @@ export class NavbarComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.subscription = this.accountService.isLoggedIn.subscribe(
-      (data: boolean) => this.isLoggedIn = data
+      (data: boolean) => {
+        this.isLoggedIn = data;
+        this.username = localStorage.getItem('userName');
+      }
     );
   }
 
   onLogout() {
     this.isLoggedIn = false;
     this.isCollapsed = true;
+    this.accountService.logout();
   }
 
   ngOnDestroy() {
