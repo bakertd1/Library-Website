@@ -18,6 +18,7 @@ import { LoginComponent } from './account/login/login.component';
 import { AuthorService } from './authors/author.service';
 import { BookService } from './books/book.service';
 import { AccountService } from './account/account.service';
+import { AccountGuard } from './account/account.guard';
 
 import { routes } from './app.routes';
 import { AuthorDetailsComponent } from './authors/author-details/author-details.component';
@@ -47,7 +48,7 @@ import { RegisterComponent } from './account/register/register.component';
     CollapseModule,
     routes
   ],
-  providers: [AuthorService, BookService, AccountService],
+  providers: [AuthorService, BookService, AccountService, AccountGuard],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

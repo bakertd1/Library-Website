@@ -9,17 +9,19 @@ import { AddAuthorComponent } from './authors/add-author/add-author.component';
 import { AuthorDetailsComponent } from './authors/author-details/author-details.component';
 import { LoginComponent } from './account/login/login.component';
 import { RegisterComponent } from './account/register/register.component';
+import { AccountGuard } from './account/account.guard';
 
 const APP_ROUTES: Routes = [
     { path: '', component: HomeComponent },
-    { path: 'books', component: BookListComponent },
-    { path: 'books/new', component: AddBookComponent },
-    { path: 'books/details/:id', component: BookDetailsComponent },
-    { path: 'authors', component: AuthorListComponent },
-    { path: 'authors/new', component: AddAuthorComponent },
-    { path: 'authors/details/:id', component: AuthorDetailsComponent },
+    { path: 'books', component: BookListComponent, canActivate: [AccountGuard] },
+    { path: 'books/new', component: AddBookComponent, canActivate: [AccountGuard] },
+    { path: 'books/details/:id', component: BookDetailsComponent, canActivate: [AccountGuard] },
+    { path: 'authors', component: AuthorListComponent, canActivate: [AccountGuard] },
+    { path: 'authors/new', component: AddAuthorComponent, canActivate: [AccountGuard] },
+    { path: 'authors/details/:id', component: AuthorDetailsComponent, canActivate: [AccountGuard] },
     { path: 'register', component: RegisterComponent },
-    { path: 'login', component: LoginComponent }
+    { path: 'login', component: LoginComponent },
+    { path: '**', redirectTo: '' }
 ];
 
 export const routes = RouterModule.forRoot(APP_ROUTES);

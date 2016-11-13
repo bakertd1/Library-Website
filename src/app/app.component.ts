@@ -14,5 +14,10 @@ export class AppComponent implements OnInit {
     //prepopulate array of books and authors for each component to use
     this.bookService.getBooks();
     this.authorService.getAuthors();
+
+    localStorage.removeItem('access_token');
+    localStorage.removeItem('expires_in');
+    localStorage.removeItem('token_type');
+    localStorage.removeItem('userName');
   }
 }
