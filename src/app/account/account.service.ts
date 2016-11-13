@@ -34,6 +34,23 @@ export class AccountService {
     );
   }
 
+  register(registration) {
+    let body = JSON.stringify(registration);
+
+    let headers = new Headers({
+      'Content-Type': 'application/json'
+    });
+
+    this.http.post("http://localhost:50010/api/Account/Register", body, { headers: headers }).subscribe(
+      response => {
+        this.router.navigate(['/login']);
+      },
+      error => {
+        alert("Unable to register");
+      }
+    );
+  }
+
   logout() {
     localStorage.removeItem('access_token');
     localStorage.removeItem('expires_in');

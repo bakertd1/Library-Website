@@ -8,6 +8,7 @@ import { AuthorListComponent } from './authors/author-list.component';
 import { AddAuthorComponent } from './authors/add-author/add-author.component';
 import { AuthorDetailsComponent } from './authors/author-details/author-details.component';
 import { LoginComponent } from './account/login/login.component';
+import { RegisterComponent } from './account/register/register.component';
 
 const APP_ROUTES: Routes = [
     { path: '', component: HomeComponent },
@@ -17,6 +18,7 @@ const APP_ROUTES: Routes = [
     { path: 'authors', component: AuthorListComponent },
     { path: 'authors/new', component: AddAuthorComponent },
     { path: 'authors/details/:id', component: AuthorDetailsComponent },
+    { path: 'register', component: RegisterComponent },
     { path: 'login', component: LoginComponent }
 ];
 

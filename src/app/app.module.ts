@@ -22,6 +22,7 @@ import { AccountService } from './account/account.service';
 import { routes } from './app.routes';
 import { AuthorDetailsComponent } from './authors/author-details/author-details.component';
 import { BookDetailsComponent } from './books/book-details/book-details.component';
+import { RegisterComponent } from './account/register/register.component';
 
 @NgModule({
   declarations: [
@@ -35,7 +36,8 @@ import { BookDetailsComponent } from './books/book-details/book-details.componen
     AddBookComponent,
     LoginComponent,
     AuthorDetailsComponent,
-    BookDetailsComponent
+    BookDetailsComponent,
+    RegisterComponent
   ],
   imports: [
     BrowserModule,
