@@ -24,14 +24,7 @@ export class EditBookComponent implements OnInit, OnDestroy {
     publicationDate: new Date(),
     numberOfPages: 0
   };
-  private authors: Author[] = [
-    {
-      firstName: "Bob",
-      lastName: "Saget",
-      birthdate: new Date(),
-      deathdate: new Date()
-    }
-  ];
+  private authors: Author[] = [];
 
   constructor(private bookService: BookService, 
               private authorService: AuthorService,

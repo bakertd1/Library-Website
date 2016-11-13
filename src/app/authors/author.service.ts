@@ -69,6 +69,31 @@ export class AuthorService {
     );
   }
 
+  updateAuthor(author: Author) {
+    let bdate = new Date(author.birthdate);
+    author.birthdate = new Date(bdate.getUTCFullYear(), bdate.getUTCMonth(), bdate.getUTCDate(),  bdate.getUTCHours(), bdate.getUTCMinutes(), bdate.getUTCSeconds());
+
+    if(author.deathdate !== null) {
+      let ddate = new Date(author.deathdate);
+      author.deathdate = new Date(ddate.getUTCFullYear(), ddate.getUTCMonth(), ddate.getUTCDate(),  ddate.getUTCHours(), ddate.getUTCMinutes(), ddate.getUTCSeconds());
+    }
+
+    const body = JSON.stringify(author);
+    const headers = new Headers({
+      'Content-Type': 'application/json',
+      'Authorization': 'bearer ' + localStorage.getItem('access_token')
+    });
+
+    this.http.put("http://localhost:50010/api/authors/" + author.id, body, { headers: headers }).map(
+      (data: Response) => data.json()
+    ).subscribe(
+      (data: Author) => {
+        this.authors.find(a => a.id == author.id)[0] = data;
+        this.authorsChanged.emit(this.authors);
+      }
+    );
+  }
+
   deleteAuthor(id: number) {
     const headers = new Headers({
       'Authorization': 'bearer ' + localStorage.getItem('access_token')

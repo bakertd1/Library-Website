@@ -5,6 +5,7 @@
         <th>Name</th>
         <th>Date of Birth</th>
         <th>Date of Death</th>
+        <th>Edit</th>
         <th>Delete</th>
       </tr>
     </thead>
@@ -14,6 +15,7 @@
         <td>{{ author.birthdate | date }}</td>
         <td *ngIf="author.deathdate !== null">{{ author.deathdate | date }}</td>
         <td *ngIf="author.deathdate === null">Still Alive</td>
+        <td><span class="glyphicon glyphicon-pencil" [routerLink]=" ['/authors/edit/', author.id] "></span></td>
         <td><span class="glyphicon glyphicon-remove" (click)="onDeleteClicked(author.id)"></span></td>
       </tr>
     </tbody>
