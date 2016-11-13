@@ -1,6 +1,6 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpModule } from '@angular/http';
 import { DropdownModule } from 'ng2-bootstrap/ng2-bootstrap';
 import { CollapseModule } from 'ng2-bootstrap/ng2-bootstrap';
@@ -24,6 +24,7 @@ import { routes } from './app.routes';
 import { AuthorDetailsComponent } from './authors/author-details/author-details.component';
 import { BookDetailsComponent } from './books/book-details/book-details.component';
 import { RegisterComponent } from './account/register/register.component';
+import { EditBookComponent } from './books/edit-book/edit-book.component';
 
 @NgModule({
   declarations: [
@@ -38,11 +39,13 @@ import { RegisterComponent } from './account/register/register.component';
     LoginComponent,
     AuthorDetailsComponent,
     BookDetailsComponent,
-    RegisterComponent
+    RegisterComponent,
+    EditBookComponent
   ],
   imports: [
     BrowserModule,
     FormsModule,
+    ReactiveFormsModule,
     HttpModule,
     DropdownModule,
     CollapseModule,

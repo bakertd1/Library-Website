@@ -4,6 +4,7 @@
       <tr>
         <th>Title</th>
         <th>Author</th>
+        <th>Edit</th>
         <th>Delete</th>
       </tr>
     </thead>
@@ -11,6 +12,7 @@
       <tr *ngFor="let book of books">
         <td><a [routerLink]=" ['/books/details/', book.id] ">{{ book.title }}</a></td>
         <td><a [routerLink]=" ['/authors/details/', book.author.id] ">{{ book.author.firstName }} {{ book.author.lastName }}</a></td>
+        <td><span class="glyphicon glyphicon-pencil" [routerLink]=" ['/books/edit/', book.id] "></span></td>
         <td><span class="glyphicon glyphicon-remove" (click)="onDeleteClicked(book.id)"></span></td>
       </tr>
     </tbody>

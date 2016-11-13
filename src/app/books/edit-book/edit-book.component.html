@@ -1,0 +1,73 @@
+<form [formGroup]="bookForm" (ngSubmit)="onSubmit()">
+    <div class="form-group">
+        <label for="title">Title<lib-required-icon></lib-required-icon></label>
+        <input 
+            id="title" 
+            formControlName="title" 
+            type="text" 
+            class="form-control" 
+            placeholder="Title" 
+            required
+        >
+        <div class="alert alert-danger" *ngIf="bookForm.controls['title'].touched && !bookForm.controls['title'].valid">
+          Title is required.
+        </div>
+    </div>
+    <div class="form-group">
+        <label for="authorsSelectBox">Author<lib-required-icon></lib-required-icon></label>
+        <select 
+            formControlName="authorId" 
+            id="authorsSelectBox" 
+            class="form-control"
+            required
+        >
+            <option *ngFor="let author of authors" [value]="author.id" [selected]="authorId == book.authorId ? 'selected' : null">{{ author.firstName }} {{ author.lastName }}</option>
+        </select>
+        <div class="alert alert-danger" *ngIf="bookForm.controls['authorId'].touched && !bookForm.controls['authorId'].valid">
+            Author is required.
+        </div>
+    </div>
+    <div class="form-group">
+        <label for="publisher">Publisher<lib-required-icon></lib-required-icon></label>
+        <input 
+            type="text" 
+            formControlName="publisher" 
+            id="publisher" 
+            class="form-control" 
+            placeholder="Publisher" 
+            required
+        >
+        <div class="alert alert-danger" *ngIf="bookForm.controls['publisher'].touched && !bookForm.controls['publisher'].valid"> 
+          Publisher is required.
+        </div>
+    </div>
+    <div class="form-group">
+        <label for="publicationDate">Publication Date<lib-required-icon></lib-required-icon></label>
+        <input 
+            type="date" 
+            formControlName="publicationDate" 
+            id="publicationDate" 
+            class="form-control" 
+            placeholder="Publication Date" 
+            required
+        >
+        <div class="alert alert-danger" *ngIf="bookForm.controls['publicationDate'].touched && !bookForm.controls['publicationDate'].valid"> 
+          Publication Date is required.
+        </div>
+    </div>
+    <div class="form-group">
+        <label for="numberOfPages">Number of Pages<lib-required-icon></lib-required-icon></label>
+        <input 
+            type="number" 
+            formControlName="numberOfPages" 
+            id="numberOfPages" 
+            class="form-control" 
+            placeholder="Number of Pages" 
+            required
+        >
+        <div class="alert alert-danger" *ngIf="bookForm.controls['numberOfPages'].touched && !bookForm.controls['numberOfPages'].valid">
+          Number of Pages is required.
+        </div>
+    </div>
+    <button type="submit" class="btn btn-primary" [disabled]="!bookForm.valid">Save</button>
+</form>

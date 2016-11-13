@@ -41,6 +41,8 @@ export class BookService {
   }
 
   addBook(book: Book) {
+    let pubDate = new Date(book.publicationDate);
+    book.publicationDate = new Date(pubDate.getUTCFullYear(), pubDate.getUTCMonth(), pubDate.getUTCDate(),  pubDate.getUTCHours(), pubDate.getUTCMinutes(), pubDate.getUTCSeconds());
     const body = JSON.stringify(book);
     const headers = new Headers({
       'Content-Type': 'application/json',
@@ -54,6 +56,25 @@ export class BookService {
     ).subscribe(
       (data: Book) => {
         this.books.push(data);
+        this.booksChanged.emit(this.books);
+      }
+    );
+  }
+
+  updateBook(book: Book) {
+    let pubDate = new Date(book.publicationDate);
+    book.publicationDate = new Date(pubDate.getUTCFullYear(), pubDate.getUTCMonth(), pubDate.getUTCDate(),  pubDate.getUTCHours(), pubDate.getUTCMinutes(), pubDate.getUTCSeconds());
+    const body = JSON.stringify(book);
+    const headers = new Headers({
+      'Content-Type': 'application/json',
+      'Authorization': 'bearer ' + localStorage.getItem('access_token')
+    });
+
+    this.http.put("http://localhost:50010/api/books/" + book.id, body, { headers: headers }).map(
+      (data: Response) => data.json()
+    ).subscribe(
+      (data: Book) => {
+        this.books.find(b => b.id == book.id)[0] = data;
         this.booksChanged.emit(this.books);
       }
     );
