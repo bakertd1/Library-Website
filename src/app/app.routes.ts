@@ -8,6 +8,7 @@ import { EditBookComponent } from './books/edit-book/edit-book.component';
 import { AuthorListComponent } from './authors/author-list.component';
 import { AddAuthorComponent } from './authors/add-author/add-author.component';
 import { AuthorDetailsComponent } from './authors/author-details/author-details.component';
+import { EditAuthorComponent } from './authors/edit-author/edit-author.component';
 import { LoginComponent } from './account/login/login.component';
 import { RegisterComponent } from './account/register/register.component';
 import { AccountGuard } from './account/account.guard';
@@ -21,6 +22,7 @@ const APP_ROUTES: Routes = [
     { path: 'authors', component: AuthorListComponent, canActivate: [AccountGuard] },
     { path: 'authors/new', component: AddAuthorComponent, canActivate: [AccountGuard] },
     { path: 'authors/details/:id', component: AuthorDetailsComponent, canActivate: [AccountGuard] },
+    { path: 'authors/edit/:id', component: EditAuthorComponent, canActivate: [AccountGuard] },
     { path: 'register', component: RegisterComponent },
     { path: 'login', component: LoginComponent },
     { path: '**', redirectTo: '' }
