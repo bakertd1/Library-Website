@@ -9,8 +9,7 @@ import { BookService } from '../book.service';
 
 @Component({
   selector: 'lib-book-details',
-  templateUrl: './book-details.component.html',
-  styles: []
+  templateUrl: './book-details.component.html'
 })
 export class BookDetailsComponent implements OnInit, OnDestroy {
   private id: number;

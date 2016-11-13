@@ -4,6 +4,7 @@ import { HomeComponent } from './home/home.component';
 import { BookListComponent } from './books/book-list.component';
 import { AddBookComponent } from './books/add-book/add-book.component';
 import { BookDetailsComponent } from './books/book-details/book-details.component';
+import { EditBookComponent } from './books/edit-book/edit-book.component';
 import { AuthorListComponent } from './authors/author-list.component';
 import { AddAuthorComponent } from './authors/add-author/add-author.component';
 import { AuthorDetailsComponent } from './authors/author-details/author-details.component';
@@ -16,6 +17,7 @@ const APP_ROUTES: Routes = [
     { path: 'books', component: BookListComponent, canActivate: [AccountGuard] },
     { path: 'books/new', component: AddBookComponent, canActivate: [AccountGuard] },
     { path: 'books/details/:id', component: BookDetailsComponent, canActivate: [AccountGuard] },
+    { path: 'books/edit/:id', component: EditBookComponent, canActivate: [AccountGuard] },
     { path: 'authors', component: AuthorListComponent, canActivate: [AccountGuard] },
     { path: 'authors/new', component: AddAuthorComponent, canActivate: [AccountGuard] },
     { path: 'authors/details/:id', component: AuthorDetailsComponent, canActivate: [AccountGuard] },

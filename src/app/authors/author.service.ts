@@ -43,6 +43,14 @@ export class AuthorService {
   }
 
   addAuthor(author: Author) {
+    let bdate = new Date(author.birthdate);
+    author.birthdate = new Date(bdate.getUTCFullYear(), bdate.getUTCMonth(), bdate.getUTCDate(),  bdate.getUTCHours(), bdate.getUTCMinutes(), bdate.getUTCSeconds());
+
+    if(author.deathdate !== null) {
+      let ddate = new Date(author.deathdate);
+      author.deathdate = new Date(ddate.getUTCFullYear(), ddate.getUTCMonth(), ddate.getUTCDate(),  ddate.getUTCHours(), ddate.getUTCMinutes(), ddate.getUTCSeconds());
+    }
+
     const body = JSON.stringify(author);
     const headers = new Headers({
       'Content-Type': 'application/json',
