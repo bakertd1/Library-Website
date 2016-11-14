@@ -51,6 +51,19 @@ export class AccountService {
     );
   }
 
+  changePassword(changePasswordBindingModel) {
+    let body = JSON.stringify(changePasswordBindingModel);
+    const headers = new Headers({
+      'Content-Type': 'application/json',
+      'Authorization': 'bearer ' + localStorage.getItem('access_token')
+    });
+
+    this.http.post("http://localhost:50010/api/Account/ChangePassword", body, { headers: headers }).subscribe(
+      response => alert("Password changed successfully"),
+      error => alert("Unable to change password")
+    );
+  }
+
   logout() {
     localStorage.removeItem('access_token');
     localStorage.removeItem('expires_in');
