@@ -4,16 +4,16 @@
       <tr>
         <th>Title</th>
         <th>Author</th>
-        <th>Edit</th>
-        <th>Delete</th>
+        <th *ngIf="isAdmin">Edit</th>
+        <th *ngIf="isAdmin">Delete</th>
       </tr>
     </thead>
     <tbody>
       <tr *ngFor="let book of books">
         <td><a [routerLink]=" ['/books/details/', book.id] ">{{ book.title }}</a></td>
         <td><a [routerLink]=" ['/authors/details/', book.author.id] ">{{ book.author.firstName }} {{ book.author.lastName }}</a></td>
-        <td><span class="glyphicon glyphicon-pencil" [routerLink]=" ['/books/edit/', book.id] "></span></td>
-        <td><span class="glyphicon glyphicon-remove" (click)="onDeleteClicked(book.id)"></span></td>
+        <td *ngIf="isAdmin"><span class="glyphicon glyphicon-pencil" [routerLink]=" ['/books/edit/', book.id] "></span></td>
+        <td *ngIf="isAdmin"><span class="glyphicon glyphicon-remove" (click)="onDeleteClicked(book.id)"></span></td>
       </tr>
     </tbody>
   </table>

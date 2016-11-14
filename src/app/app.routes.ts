@@ -13,17 +13,18 @@ import { LoginComponent } from './account/login/login.component';
 import { RegisterComponent } from './account/register/register.component';
 import { ChangePasswordComponent } from './account/change-password/change-password.component';
 import { AccountGuard } from './account/account.guard';
+import { AdminGuard } from './account/admin.guard';
 
 const APP_ROUTES: Routes = [
     { path: '', component: HomeComponent },
     { path: 'books', component: BookListComponent, canActivate: [AccountGuard] },
-    { path: 'books/new', component: AddBookComponent, canActivate: [AccountGuard] },
+    { path: 'books/new', component: AddBookComponent, canActivate: [AdminGuard, AccountGuard] },
     { path: 'books/details/:id', component: BookDetailsComponent, canActivate: [AccountGuard] },
-    { path: 'books/edit/:id', component: EditBookComponent, canActivate: [AccountGuard] },
+    { path: 'books/edit/:id', component: EditBookComponent, canActivate: [AdminGuard, AccountGuard] },
     { path: 'authors', component: AuthorListComponent, canActivate: [AccountGuard] },
-    { path: 'authors/new', component: AddAuthorComponent, canActivate: [AccountGuard] },
+    { path: 'authors/new', component: AddAuthorComponent, canActivate: [AdminGuard, AccountGuard] },
     { path: 'authors/details/:id', component: AuthorDetailsComponent, canActivate: [AccountGuard] },
-    { path: 'authors/edit/:id', component: EditAuthorComponent, canActivate: [AccountGuard] },
+    { path: 'authors/edit/:id', component: EditAuthorComponent, canActivate: [AdminGuard, AccountGuard] },
     { path: 'newPassword', component: ChangePasswordComponent, canActivate: [AccountGuard] },
     { path: 'register', component: RegisterComponent },
     { path: 'login', component: LoginComponent },

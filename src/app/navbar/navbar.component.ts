@@ -14,7 +14,8 @@ import { AccountService } from '../account/account.service';
 })
 export class NavbarComponent implements OnInit, OnDestroy {
   isCollapsed: boolean = true;
-  isLoggedIn: boolean = false;;
+  isLoggedIn: boolean = false;
+  isAdmin: boolean = false;
   private subscription: Subscription;
   username: string = localStorage.getItem('userName');
 
@@ -25,11 +26,17 @@ export class NavbarComponent implements OnInit, OnDestroy {
       (data: boolean) => {
         this.isLoggedIn = data;
         this.username = localStorage.getItem('userName');
+        if(localStorage.getItem('is_admin') === 'true') {
+          this.isAdmin = true;
+        } else {
+          this.isAdmin = false;
+        }
       }
     );
   }
 
   onLogout() {
+    this.isAdmin = false;
     this.isLoggedIn = false;
     this.isCollapsed = true;
     this.accountService.logout();

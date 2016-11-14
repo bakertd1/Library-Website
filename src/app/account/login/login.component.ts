@@ -6,8 +6,7 @@ import { RequiredIconComponent } from '../../shared/required-icon/required-icon.
 
 @Component({
   selector: 'lib-login',
-  templateUrl: './login.component.html',
-  styles: []
+  templateUrl: './login.component.html'
 })
 export class LoginComponent {
 

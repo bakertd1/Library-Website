@@ -11,13 +11,21 @@ import { AuthorService } from './author.service';
 export class AuthorListComponent implements OnInit, OnDestroy { 
   private authors: Author[] = [];
   private subscription: Subscription;
+  private isAdmin = false;
 
   constructor(private authorService: AuthorService) { }
 
   ngOnInit() {
     this.authorService.getAuthors();
     this.subscription = this.authorService.authorsChanged.subscribe(
-      (data: Author[]) => this.authors = data
+      (data: Author[]) => {
+        this.authors = data;
+        if(localStorage.getItem('is_admin') === 'true') {
+          this.isAdmin = true;
+        } else {
+          this.isAdmin = false;
+        }
+      }
     );
   }
 
