@@ -26,6 +26,7 @@ import { BookDetailsComponent } from './books/book-details/book-details.componen
 import { RegisterComponent } from './account/register/register.component';
 import { EditBookComponent } from './books/edit-book/edit-book.component';
 import { EditAuthorComponent } from './authors/edit-author/edit-author.component';
+import { ChangePasswordComponent } from './account/change-password/change-password.component';
 
 @NgModule({
   declarations: [
@@ -42,7 +43,8 @@ import { EditAuthorComponent } from './authors/edit-author/edit-author.component
     BookDetailsComponent,
     RegisterComponent,
     EditBookComponent,
-    EditAuthorComponent
+    EditAuthorComponent,
+    ChangePasswordComponent
   ],
   imports: [
     BrowserModule,
