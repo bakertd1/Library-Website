@@ -12,13 +12,21 @@ import { BookService } from './book.service';
 export class BookListComponent { 
   private books: Book[] = [];
   private subscription: Subscription;
+  private isAdmin = false;
 
   constructor(private BookService: BookService) { }
 
   ngOnInit() {
     this.BookService.getBooks();
     this.subscription = this.BookService.booksChanged.subscribe(
-      (books: Book[]) => this.books = books
+      (books: Book[]) => {
+        this.books = books;
+        if(localStorage.getItem('is_admin') === 'true') {
+          this.isAdmin = true;
+        } else {
+          this.isAdmin = false;
+        }
+      }
     );
   }
 

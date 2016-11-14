@@ -21,6 +21,11 @@ export class AccountService {
 
     this.http.post(url, body, options).subscribe(
       response => {
+        if(response.json().role === 'admin') {
+          localStorage.setItem('is_admin', "true");
+        } else {
+          localStorage.setItem('is_admin', "false");
+        }
         localStorage.setItem('access_token', response.json().access_token);
         localStorage.setItem('expires_in', response.json().expires_in);
         localStorage.setItem('token_type', response.json().token_type);
@@ -69,6 +74,7 @@ export class AccountService {
     localStorage.removeItem('expires_in');
     localStorage.removeItem('token_type');
     localStorage.removeItem('userName');
+    localStorage.removeItem('is_admin');
     this.isLoggedIn.emit(false);
     this.router.navigate(['/login']);
   }
