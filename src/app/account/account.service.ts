@@ -9,7 +9,8 @@ export class AccountService {
   constructor(private router: Router, private http: Http) { }
 
   login(credentials) {
-    let url = "http://localhost:50010/token";
+    //let url = "http://localhost:50010/token";
+    let url = "https://library-api.azurewebsites.net/token";
     let body = "grant_type=password" + "&username=" + credentials.username + "&password=" + credentials.password;
     let headers = new Headers({
       'Content-Type': 'application/x-www-form-urlencoded',
@@ -46,7 +47,7 @@ export class AccountService {
       'Content-Type': 'application/json'
     });
 
-    this.http.post("http://localhost:50010/api/Account/Register", body, { headers: headers }).subscribe(
+    this.http.post("https://library-api.azurewebsites.net/api/Account/Register", body, { headers: headers }).subscribe(
       response => {
         this.router.navigate(['/login']);
       },
@@ -63,7 +64,7 @@ export class AccountService {
       'Authorization': 'bearer ' + localStorage.getItem('access_token')
     });
 
-    this.http.post("http://localhost:50010/api/Account/ChangePassword", body, { headers: headers }).subscribe(
+    this.http.post("https://library-api.azurewebsites.net/api/Account/ChangePassword", body, { headers: headers }).subscribe(
       response => alert("Password changed successfully"),
       error => alert("Unable to change password")
     );
