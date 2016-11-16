@@ -20,6 +20,7 @@ import { BookService } from './books/book.service';
 import { AccountService } from './account/account.service';
 import { AccountGuard } from './account/account.guard';
 import { AdminGuard } from './account/admin.guard';
+import { AccountValidators } from './account/account.validators';
 
 import { routes } from './app.routes';
 import { AuthorDetailsComponent } from './authors/author-details/author-details.component';
@@ -56,7 +57,7 @@ import { ChangePasswordComponent } from './account/change-password/change-passwo
     CollapseModule,
     routes
   ],
-  providers: [AuthorService, BookService, AccountService, AccountGuard, AdminGuard],
+  providers: [AuthorService, BookService, AccountService, AccountGuard, AdminGuard, AccountValidators],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

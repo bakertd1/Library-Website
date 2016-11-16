@@ -3,6 +3,7 @@ import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 
 import { AccountService } from '../account.service';
+import { AccountValidators } from '../account.validators';
 
 @Component({
   selector: 'lib-change-password',
@@ -16,9 +17,9 @@ export class ChangePasswordComponent implements OnInit {
   ngOnInit() {
     this.changePasswordForm = new FormGroup({
       oldPassword: new FormControl('', Validators.required),
-      newPassword: new FormControl('', [Validators.required]),
+      newPassword: new FormControl('', [Validators.required, Validators.pattern("^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,}$")]),
       confirmPassword: new FormControl('', [Validators.required])
-    });
+    }, AccountValidators.changePasswordsShouldMatch);
   }
 
   onSubmit() {
