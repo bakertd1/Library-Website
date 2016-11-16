@@ -1,18 +1,18 @@
 <form #f="ngForm" (ngSubmit)="onSubmit(f.value)">
   <div class="form-group">
-    <label for="username">Username<lib-required-icon></lib-required-icon></label>
+    <label for="username">Email Address<lib-required-icon></lib-required-icon></label>
     <input 
       type="email" 
       class="form-control" 
       id="username" 
       name="username"
-      placeholder="Username"
+      placeholder="Email"
       ngModel
       #username="ngModel"
       required
     >
     <div class="alert alert-danger" *ngIf="username.touched && !username.valid">
-      Username is required.
+      Email is required.
     </div>
   </div>
   <div class="form-group">
@@ -31,5 +31,5 @@
       Password is required.
     </div>
   </div>
-  <button type="submit" class="btn btn-primary" [disabled]="!f.valid">Submit</button>
+  <button type="submit" class="btn btn-primary" [disabled]="!f.valid">Login</button>
 </form>

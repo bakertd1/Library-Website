@@ -1,6 +1,7 @@
 import { Injectable, EventEmitter } from '@angular/core';
 import { Router } from '@angular/router';
 import { Http, Headers, RequestOptions } from '@angular/http';
+import { FormGroup, FormControl } from '@angular/forms';
 
 @Injectable()
 export class AccountService {
@@ -9,7 +10,6 @@ export class AccountService {
   constructor(private router: Router, private http: Http) { }
 
   login(credentials) {
-    //let url = "http://localhost:50010/token";
     let url = "https://library-api.azurewebsites.net/token";
     let body = "grant_type=password" + "&username=" + credentials.username + "&password=" + credentials.password;
     let headers = new Headers({
@@ -49,10 +49,11 @@ export class AccountService {
 
     this.http.post("https://library-api.azurewebsites.net/api/Account/Register", body, { headers: headers }).subscribe(
       response => {
+        alert("Success!");
         this.router.navigate(['/login']);
       },
       error => {
-        alert("Unable to register");
+        alert("This email is already in use");
       }
     );
   }

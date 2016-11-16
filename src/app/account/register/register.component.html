@@ -1,22 +1,18 @@
-<form #f="ngForm" (ngSubmit)="onSubmit(f.value)">
+<form [formGroup]="registerForm" (ngSubmit)="onSubmit()">
   <div class="form-group">
     <label for="email">Email Address<lib-required-icon></lib-required-icon></label>
     <input 
       type="email" 
       class="form-control" 
       id="email" 
-      name="email"
+      formControlName="email"
       placeholder="Email"
-      ngModel
-      #email="ngModel"
-      required
-      pattern="^[a-zA-Z0-9.!#$%&’*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$"
     >
-    <div *ngIf="email.touched && email.errors">
-      <div class="alert alert-danger" *ngIf="email.errors.required">
+    <div *ngIf="registerForm.controls['email'].touched && registerForm.controls['email'].errors">
+      <div class="alert alert-danger" *ngIf="registerForm.controls['email'].errors.required">
         Email Address is required.
       </div>
-      <div class="alert alert-danger" *ngIf="email.errors.pattern">
+      <div class="alert alert-danger" *ngIf="registerForm.controls['email'].errors.pattern">
         Please enter a vaild Email Address.
       </div>
     </div>
@@ -28,17 +24,13 @@
       class="form-control" 
       id="password" 
       placeholder="Password"
-      name="password"
-      ngModel
-      #password="ngModel"
-      required
-      pattern="^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[$@$!%*?&])[A-Za-z\d$@$!%*?&]{8,}"
+      formControlName="password"
     >
-  <div *ngIf="password.touched && password.errors">
-      <div class="alert alert-danger" *ngIf="password.errors.required">
+  <div *ngIf="registerForm.controls['password'].touched && registerForm.controls['password'].errors">
+      <div class="alert alert-danger" *ngIf="registerForm.controls['password'].errors.required">
         Password is required.
       </div>
-      <div class="alert alert-danger" *ngIf="password.errors.pattern">
+      <div class="alert alert-danger" *ngIf="registerForm.controls['password'].errors.pattern">
         Password must contain: Minimum 8 characters atleast 1 UpperCase Alphabet, 1 LowerCase Alphabet, 1 Number and 1 Special Character
       </div>
     </div>
@@ -50,20 +42,16 @@
       class="form-control" 
       id="confirmPassword" 
       placeholder="Confirm Password"
-      name="confirmPassword"
-      ngModel
-      #confirmPassword="ngModel"
-      required
-      pattern="^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[$@$!%*?&])[A-Za-z\d$@$!%*?&]{8,}"
+      formControlName="confirmPassword"
     >
-    <div *ngIf="confirmPassword.touched && confirmPassword.errors">
-      <div class="alert alert-danger" *ngIf="confirmPassword.errors.required">
+    <div *ngIf="registerForm.controls['confirmPassword'].touched">
+      <div class="alert alert-danger" *ngIf="registerForm.controls['confirmPassword'].errors?.required">
         Confirm Password is required.
       </div>
-      <div class="alert alert-danger" *ngIf="confirmPassword.errors.pattern">
-        Password must contain: Minimum 8 characters atleast 1 UpperCase Alphabet, 1 LowerCase Alphabet, 1 Number and 1 Special Character
+      <div class="alert alert-danger" *ngIf="registerForm.errors?.passwordsShouldMatch">
+        Passwords do not match.
       </div>
     </div>
   </div>
-  <button type="submit" class="btn btn-primary" [disabled]="!f.valid">Submit</button>
+  <button type="submit" class="btn btn-primary" [disabled]="!registerForm.valid">Register</button>
 </form>
