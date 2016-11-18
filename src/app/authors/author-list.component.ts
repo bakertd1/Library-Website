@@ -1,6 +1,7 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Subscription } from 'rxjs/Rx';
 
+import { AuthorTableFilterPipe } from './authortable-filter.pipe';
 import { Author } from './author';
 import { AuthorService } from './author.service';
 
@@ -12,6 +13,10 @@ export class AuthorListComponent implements OnInit, OnDestroy {
   private authors: Author[] = [];
   private subscription: Subscription;
   private isAdmin = false;
+  public filterQuery = "";
+  public rowsOnPage = 10;
+  public sortBy = "lastName";
+  public sortOrder = "asc";
 
   constructor(private authorService: AuthorService) { }
 

@@ -4,6 +4,7 @@ import { Subscription } from 'rxjs/Rx';
 import { Book } from './book';
 import { Author } from '../authors/author';
 import { BookService } from './book.service';
+import { BookTableFilterPipe } from './booktable-filter.pipe';
 
 @Component({
   selector: 'lib-book-list',
@@ -13,6 +14,10 @@ export class BookListComponent {
   private books: Book[] = [];
   private subscription: Subscription;
   private isAdmin = false;
+  public filterQuery = "";
+  public rowsOnPage = 10;
+  public sortBy = "title";
+  public sortOrder = "asc";
 
   constructor(private BookService: BookService) { }
 
