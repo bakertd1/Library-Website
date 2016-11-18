@@ -4,6 +4,8 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpModule } from '@angular/http';
 import { DropdownModule } from 'ng2-bootstrap/ng2-bootstrap';
 import { CollapseModule } from 'ng2-bootstrap/ng2-bootstrap';
+import { DataTableModule } from 'angular2-datatable';
+import 'lodash';
 
 import { AppComponent } from './app.component';
 import { NavbarComponent } from './navbar/navbar.component';
@@ -30,6 +32,9 @@ import { EditBookComponent } from './books/edit-book/edit-book.component';
 import { EditAuthorComponent } from './authors/edit-author/edit-author.component';
 import { ChangePasswordComponent } from './account/change-password/change-password.component';
 
+import { AuthorTableFilterPipe } from './authors/authortable-filter.pipe';
+import { BookTableFilterPipe } from './books/booktable-filter.pipe';
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -46,7 +51,9 @@ import { ChangePasswordComponent } from './account/change-password/change-passwo
     RegisterComponent,
     EditBookComponent,
     EditAuthorComponent,
-    ChangePasswordComponent
+    ChangePasswordComponent,
+    AuthorTableFilterPipe,
+    BookTableFilterPipe
   ],
   imports: [
     BrowserModule,
@@ -55,6 +62,7 @@ import { ChangePasswordComponent } from './account/change-password/change-passwo
     HttpModule,
     DropdownModule,
     CollapseModule,
+    DataTableModule,
     routes
   ],
   providers: [AuthorService, BookService, AccountService, AccountGuard, AdminGuard, AccountValidators],
