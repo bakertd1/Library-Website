@@ -1,4 +1,5 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit, OnDestroy, ViewChild } from '@angular/core';
+import { ModalComponent } from 'ng2-bs3-modal/ng2-bs3-modal';
 import { Subscription } from 'rxjs/Rx';
 
 import { Book } from './book';
@@ -18,6 +19,8 @@ export class BookListComponent {
   public rowsOnPage = 10;
   public sortBy = "title";
   public sortOrder = "asc";
+  @ViewChild('modal') modal: ModalComponent;
+  private bookId: number;
 
   constructor(private BookService: BookService) { }
 
@@ -36,7 +39,13 @@ export class BookListComponent {
   }
 
   onDeleteClicked(id: number) {
-    this.BookService.deleteBook(id);
+    this.bookId = id;
+    this.modal.open();
+  }
+
+  onDeleteConfirmed() {
+    this.modal.close();
+    this.BookService.deleteBook(this.bookId);
   }
 
   ngOnDestroy() {

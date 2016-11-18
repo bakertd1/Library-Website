@@ -20,24 +20,7 @@ export class AccountService {
       headers: headers
     });
 
-    this.http.post(url, body, options).subscribe(
-      response => {
-        if(response.json().role === 'admin') {
-          localStorage.setItem('is_admin', "true");
-        } else {
-          localStorage.setItem('is_admin', "false");
-        }
-        localStorage.setItem('access_token', response.json().access_token);
-        localStorage.setItem('expires_in', response.json().expires_in);
-        localStorage.setItem('token_type', response.json().token_type);
-        localStorage.setItem('userName', response.json().userName);
-        this.isLoggedIn.emit(true);
-        this.router.navigate(['/']);
-      },
-      error => {
-        alert("Invalid username or password");
-      }
-    );
+    return this.http.post(url, body, options);
   }
 
   register(registration) {
@@ -47,18 +30,10 @@ export class AccountService {
       'Content-Type': 'application/json'
     });
 
-    this.http.post("https://library-api.azurewebsites.net/api/Account/Register", body, { headers: headers }).subscribe(
-      response => {
-        alert("Success!");
-        this.router.navigate(['/login']);
-      },
-      error => {
-        alert("This email is already in use");
-      }
-    );
+    return this.http.post("https://library-api.azurewebsites.net/api/Account/Register", body, { headers: headers });
   }
 
-  changePassword(changePasswordBindingModel) {
+  /*changePassword(changePasswordBindingModel) {
     let body = JSON.stringify(changePasswordBindingModel);
     const headers = new Headers({
       'Content-Type': 'application/json',
@@ -69,6 +44,16 @@ export class AccountService {
       response => alert("Password changed successfully"),
       error => alert("Unable to change password")
     );
+  }*/
+
+  changePassword(changePasswordBindingModel) {
+    let body = JSON.stringify(changePasswordBindingModel);
+    const headers = new Headers({
+      'Content-Type': 'application/json',
+      'Authorization': 'bearer ' + localStorage.getItem('access_token')
+    });
+
+    return this.http.post("https://library-api.azurewebsites.net/api/Account/ChangePassword", body, { headers: headers });
   }
 
   logout() {

@@ -5,6 +5,7 @@ import { HttpModule } from '@angular/http';
 import { DropdownModule } from 'ng2-bootstrap/ng2-bootstrap';
 import { CollapseModule } from 'ng2-bootstrap/ng2-bootstrap';
 import { DataTableModule } from 'angular2-datatable';
+import { Ng2Bs3ModalModule } from 'ng2-bs3-modal/ng2-bs3-modal';
 import 'lodash';
 
 import { AppComponent } from './app.component';
@@ -63,6 +64,7 @@ import { BookTableFilterPipe } from './books/booktable-filter.pipe';
     DropdownModule,
     CollapseModule,
     DataTableModule,
+    Ng2Bs3ModalModule,
     routes
   ],
   providers: [AuthorService, BookService, AccountService, AccountGuard, AdminGuard, AccountValidators],

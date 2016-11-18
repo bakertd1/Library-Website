@@ -33,3 +33,15 @@
   </div>
   <button type="submit" class="btn btn-primary" [disabled]="!f.valid">Login</button>
 </form>
+
+<modal #modal>
+    <modal-header>
+        <h4 class="modal-title">Unable to Login</h4>
+    </modal-header>
+    <modal-body>
+        Invalid Username or Password
+    </modal-body>
+    <modal-footer>
+        <button type="button" class="btn btn-primary" (click)="modal.close()">Ok</button>
+    </modal-footer>
+</modal>
