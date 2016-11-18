@@ -1,4 +1,5 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit, OnDestroy, ViewChild } from '@angular/core';
+import { ModalComponent } from 'ng2-bs3-modal/ng2-bs3-modal';
 import { Subscription } from 'rxjs/Rx';
 
 import { AuthorTableFilterPipe } from './authortable-filter.pipe';
@@ -17,6 +18,8 @@ export class AuthorListComponent implements OnInit, OnDestroy {
   public rowsOnPage = 10;
   public sortBy = "lastName";
   public sortOrder = "asc";
+  @ViewChild('modal') modal: ModalComponent;
+  private authorId: number;
 
   constructor(private authorService: AuthorService) { }
 
@@ -35,7 +38,13 @@ export class AuthorListComponent implements OnInit, OnDestroy {
   }
 
   onDeleteClicked(id: number) {
-    this.authorService.deleteAuthor(id);
+    this.authorId = id;
+    this.modal.open();
+  }
+
+  onDeleteConfirmed() {
+    this.modal.close();
+    this.authorService.deleteAuthor(this.authorId);
   }
 
   ngOnDestroy() {

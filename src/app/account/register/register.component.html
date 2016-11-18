@@ -55,3 +55,27 @@
   </div>
   <button type="submit" class="btn btn-primary" [disabled]="!registerForm.valid">Register</button>
 </form>
+
+<modal #successModal>
+    <modal-header>
+        <h4 class="modal-title">Registration Successful</h4>
+    </modal-header>
+    <modal-body>
+        Click Ok to Login
+    </modal-body>
+    <modal-footer>
+        <button type="button" class="btn btn-primary" (click)="onSuccess()">Ok</button>
+    </modal-footer>
+</modal>
+
+<modal #failModal>
+    <modal-header>
+        <h4 class="modal-title">Registration Failed</h4>
+    </modal-header>
+    <modal-body>
+        This Email is already in use
+    </modal-body>
+    <modal-footer>
+        <button type="button" class="btn btn-primary" (click)="failModal.close()">Ok</button>
+    </modal-footer>
+</modal>

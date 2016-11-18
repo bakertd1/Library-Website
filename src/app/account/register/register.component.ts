@@ -1,5 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
+import { ModalComponent } from 'ng2-bs3-modal/ng2-bs3-modal';
 
 import { AccountService } from '../account.service';
 import { RequiredIconComponent } from '../../shared/required-icon/required-icon.component';
@@ -11,8 +13,10 @@ import { AccountValidators } from '../account.validators';
 })
 export class RegisterComponent implements OnInit {
   registerForm: FormGroup;
+  @ViewChild('successModal') successModal: ModalComponent;
+  @ViewChild('failModal') failModal: ModalComponent;
 
-  constructor(private accountService: AccountService) { }
+  constructor(private router: Router, private accountService: AccountService) { }
 
   ngOnInit() {
     this.registerForm = new FormGroup({
@@ -24,6 +28,18 @@ export class RegisterComponent implements OnInit {
   }
 
   onSubmit() {
-    this.accountService.register(this.registerForm.value);
+    this.accountService.register(this.registerForm.value).subscribe(
+      response => {
+          this.successModal.open();
+        },
+        error => {
+          this.failModal.open();
+        }
+    );
+  }
+
+  onSuccess() {
+    this.successModal.close();
+    this.router.navigate(['/login']);
   }
 }
