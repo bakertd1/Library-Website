@@ -33,18 +33,15 @@ export class AccountService {
     return this.http.post("https://library-api.azurewebsites.net/api/Account/Register", body, { headers: headers });
   }
 
-  /*changePassword(changePasswordBindingModel) {
-    let body = JSON.stringify(changePasswordBindingModel);
-    const headers = new Headers({
-      'Content-Type': 'application/json',
-      'Authorization': 'bearer ' + localStorage.getItem('access_token')
+  checkEmail(email: string) {
+    let url = "https://library-api.azurewebsites.net/api/Account/UsernameExists";
+    let body = JSON.stringify(email);
+    let headers = new Headers({
+      'Content-Type': 'application/json'
     });
 
-    this.http.post("https://library-api.azurewebsites.net/api/Account/ChangePassword", body, { headers: headers }).subscribe(
-      response => alert("Password changed successfully"),
-      error => alert("Unable to change password")
-    );
-  }*/
+    return this.http.post(url, body, { headers: headers });
+  }
 
   changePassword(changePasswordBindingModel) {
     let body = JSON.stringify(changePasswordBindingModel);

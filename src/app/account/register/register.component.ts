@@ -20,11 +20,28 @@ export class RegisterComponent implements OnInit {
 
   ngOnInit() {
     this.registerForm = new FormGroup({
-      email: new FormControl('', [Validators.required, Validators.pattern("^[-a-z0-9~!$%^&*_=+}{\'?]+(\.[-a-z0-9~!$%^&*_=+}{\'?]+)*@([a-z0-9_][-a-z0-9_]*(\.[-a-z0-9_]+[a-z][a-z])|([0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}))(:[0-9]{1,5})?$")],),
+      email: new FormControl('', [
+                                    Validators.required, 
+                                    Validators.pattern("^[-a-z0-9~!$%^&*_=+}{\'?]+(\.[-a-z0-9~!$%^&*_=+}{\'?]+)*@([a-z0-9_][-a-z0-9_]*(\.[-a-z0-9_]+[a-z][a-z])|([0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}))(:[0-9]{1,5})?$")],
+                                    this.shouldBeUnique.bind(this)),
       password: new FormControl('', [Validators.required, Validators.pattern("^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,}$")]),
       confirmPassword: new FormControl('', [Validators.required])
     },
     AccountValidators.registerPasswordsShouldMatch);
+  }
+
+  shouldBeUnique(formControl: FormControl) {
+    return new Promise((resolve, reject) => {
+      this.accountService.checkEmail(formControl.value).subscribe(
+        response => {
+          if(response.json() == true) {
+            resolve({ shouldBeUnique: true });
+          } else {
+            resolve(null);
+          }
+        }
+      );
+    });
   }
 
   onSubmit() {

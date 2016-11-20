@@ -8,6 +8,9 @@
       formControlName="email"
       placeholder="Email"
     >
+    <div class="alert alert-danger" *ngIf="registerForm.controls['email'].errors?.shouldBeUnique">
+      This Email Address is already in use.
+    </div>
     <div *ngIf="registerForm.controls['email'].touched && registerForm.controls['email'].errors">
       <div class="alert alert-danger" *ngIf="registerForm.controls['email'].errors.required">
         Email Address is required.
