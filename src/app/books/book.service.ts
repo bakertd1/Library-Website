@@ -6,6 +6,7 @@ import { Book } from './book';
 
 @Injectable()
 export class BookService {
+  private apiHostName = "https://library-api.azurewebsites.net";
   books: Book[] = [];
   booksChanged = new EventEmitter();
 
@@ -16,7 +17,7 @@ export class BookService {
       'Authorization': 'bearer ' + localStorage.getItem('access_token')
     });
 
-    this.http.get("https://library-api.azurewebsites.net/api/books", { headers: headers }).map(
+    this.http.get(this.apiHostName + "/api/books", { headers: headers }).map(
       (data: Response) => data.json()
     ).subscribe(
       (data: Book[]) => {
@@ -37,7 +38,7 @@ export class BookService {
       'Authorization': 'bearer ' + localStorage.getItem('access_token')
     });
 
-    this.http.get("https://library-api.azurewebsites.net/api/books/" + id, { headers: headers }).map(
+    this.http.get(this.apiHostName + "/api/books/" + id, { headers: headers }).map(
       (data: Response) => data.json()
     ).subscribe(
       (data: Book) => {
@@ -60,7 +61,7 @@ export class BookService {
       'Authorization': 'bearer ' + localStorage.getItem('access_token')
     });
 
-    this.http.post("https://library-api.azurewebsites.net/api/books", body, {
+    this.http.post(this.apiHostName + "/api/books", body, {
       headers: headers
     }).map(
       (data: Response) => data.json()
@@ -82,11 +83,12 @@ export class BookService {
       'Authorization': 'bearer ' + localStorage.getItem('access_token')
     });
 
-    this.http.put("https://library-api.azurewebsites.net/api/books/" + book.id, body, { headers: headers }).map(
+    this.http.put(this.apiHostName + "/api/books/" + book.id, body, { headers: headers }).map(
       (data: Response) => data.json()
     ).subscribe(
       (data: Book) => {
-        this.books.find(b => b.id == book.id)[0] = data;
+        this.books = this.books.filter(e => e.id !== data.id);
+        this.books.push(data);
         this.booksChanged.emit(this.books);
       }
     );
@@ -97,7 +99,7 @@ export class BookService {
       'Authorization': 'bearer ' + localStorage.getItem('access_token')
     });
 
-    this.http.delete("https://library-api.azurewebsites.net/api/books/" + id, { headers: headers }).subscribe(
+    this.http.delete(this.apiHostName + "/api/books/" + id, { headers: headers }).subscribe(
       (response: Response) => {
         this.books = this.books.filter(e => e.id !== id);
         this.booksChanged.emit(this.books);

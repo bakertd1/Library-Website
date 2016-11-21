@@ -5,12 +5,13 @@ import { FormGroup, FormControl } from '@angular/forms';
 
 @Injectable()
 export class AccountService {
+  private apiHostName = "https://library-api.azurewebsites.net";
   isLoggedIn = new EventEmitter();
 
   constructor(private router: Router, private http: Http) { }
 
   login(credentials) {
-    let url = "https://library-api.azurewebsites.net/token";
+    let url = this.apiHostName + "/token";
     let body = "grant_type=password" + "&username=" + credentials.username + "&password=" + credentials.password;
     let headers = new Headers({
       'Content-Type': 'application/x-www-form-urlencoded',
@@ -30,11 +31,11 @@ export class AccountService {
       'Content-Type': 'application/json'
     });
 
-    return this.http.post("https://library-api.azurewebsites.net/api/Account/Register", body, { headers: headers });
+    return this.http.post(this.apiHostName + "/api/Account/Register", body, { headers: headers });
   }
 
   checkEmail(email: string) {
-    let url = "https://library-api.azurewebsites.net/api/Account/UsernameExists";
+    let url = this.apiHostName + "/api/Account/UsernameExists";
     let body = JSON.stringify(email);
     let headers = new Headers({
       'Content-Type': 'application/json'
@@ -50,7 +51,7 @@ export class AccountService {
       'Authorization': 'bearer ' + localStorage.getItem('access_token')
     });
 
-    return this.http.post("https://library-api.azurewebsites.net/api/Account/ChangePassword", body, { headers: headers });
+    return this.http.post(this.apiHostName + "/api/Account/ChangePassword", body, { headers: headers });
   }
 
   logout() {
