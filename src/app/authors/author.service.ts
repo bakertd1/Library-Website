@@ -7,6 +7,7 @@ import { Author } from './author';
 
 @Injectable()
 export class AuthorService {
+  private apiHostName = "https://library-api.azurewebsites.net";
   authors: Author[] = [];
   authorsChanged = new EventEmitter();
 
@@ -18,7 +19,7 @@ export class AuthorService {
       'Authorization': 'bearer ' + localStorage.getItem('access_token')
     });
 
-    this.http.get("https://library-api.azurewebsites.net/api/authors", { headers: headers }).map(
+    this.http.get(this.apiHostName + "/api/authors", { headers: headers }).map(
       (data: Response) => data.json()
     ).subscribe(
       (data: Author[]) => {
@@ -44,7 +45,7 @@ export class AuthorService {
       'Authorization': 'bearer ' + localStorage.getItem('access_token')
     });
 
-    this.http.get("https://library-api.azurewebsites.net/api/authors/" + id, { headers: headers }).map(
+    this.http.get(this.apiHostName + "/api/authors/" + id, { headers: headers }).map(
       (data: Response) => data.json()
     ).subscribe(
       (data: Author) => {
@@ -77,7 +78,7 @@ export class AuthorService {
       'Authorization': 'bearer ' + localStorage.getItem('access_token')
     });
 
-    this.http.post("https://library-api.azurewebsites.net/api/authors", body, {
+    this.http.post(this.apiHostName + "/api/authors", body, {
       headers: headers
     }).map( 
       (data: Response) => data.json()
@@ -104,11 +105,13 @@ export class AuthorService {
       'Authorization': 'bearer ' + localStorage.getItem('access_token')
     });
 
-    this.http.put("https://library-api.azurewebsites.net/api/authors/" + author.id, body, { headers: headers }).map(
+    this.http.put(this.apiHostName + "/api/authors/" + author.id, body, { headers: headers }).map(
       (data: Response) => data.json()
     ).subscribe(
       (data: Author) => {
-        this.authors.find(a => a.id == author.id)[0] = data;
+        //this.authors.find(a => a.id == author.id)[0] = data;
+        this.authors = this.authors.filter(e => e.id !== data.id);
+        this.authors.push(data);
         this.authorsChanged.emit(this.authors);
       }
     );
@@ -119,7 +122,7 @@ export class AuthorService {
       'Authorization': 'bearer ' + localStorage.getItem('access_token')
     });
 
-    this.http.delete("https://library-api.azurewebsites.net/api/authors/" + id, { headers: headers }).subscribe(
+    this.http.delete(this.apiHostName + "/api/authors/" + id, { headers: headers }).subscribe(
       (response: Response) => {
         this.authors = this.authors.filter(e => e.id !== id);
         this.authorsChanged.emit(this.authors);
