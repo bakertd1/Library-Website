@@ -1,6 +1,6 @@
 import { Injectable, EventEmitter } from '@angular/core';
 import { Router } from '@angular/router';
-import { Http, Headers, RequestOptions } from '@angular/http';
+import { Http, Response, Headers, RequestOptions } from '@angular/http';
 import { FormGroup, FormControl } from '@angular/forms';
 
 @Injectable()
@@ -39,6 +39,12 @@ export class AccountService {
     return this.http.post(this.apiHostName + "/api/Account/Register", body, { headers: headers });
   }
 
+  getUsers() {
+    const headers = new Headers({ 'Authorization': localStorage.getItem('token_type') + ' ' + localStorage.getItem('access_token') });
+
+    return this.http.get(this.apiHostName + "/api/Account/GetUsers", { headers: headers }).map((data: Response) => data.json());
+  }
+
   //used to ensure email uniqueness
   //send email to the api
   //api responds with true if that user already exists 
@@ -56,7 +62,7 @@ export class AccountService {
     let body = JSON.stringify(changePasswordBindingModel);
     const headers = new Headers({
       'Content-Type': 'application/json',
-      'Authorization': 'bearer ' + localStorage.getItem('access_token')
+      'Authorization': localStorage.getItem('token_type') + ' ' + localStorage.getItem('access_token')
     });
 
     return this.http.post(this.apiHostName + "/api/Account/ChangePassword", body, { headers: headers });
