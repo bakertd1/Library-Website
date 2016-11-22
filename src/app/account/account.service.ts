@@ -39,10 +39,28 @@ export class AccountService {
     return this.http.post(this.apiHostName + "/api/Account/Register", body, { headers: headers });
   }
 
+  //gets a list of users from the api
   getUsers() {
     const headers = new Headers({ 'Authorization': localStorage.getItem('token_type') + ' ' + localStorage.getItem('access_token') });
 
     return this.http.get(this.apiHostName + "/api/Account/GetUsers", { headers: headers }).map((data: Response) => data.json());
+  }
+
+  //deletes the specified user
+  deleteUser(email: string) {
+    let body = JSON.stringify(email);
+
+    let headers = new Headers({
+      'Content-Type': 'application/json',
+      'Authorization': localStorage.getItem('token_type') + ' ' + localStorage.getItem('access_token')
+    });
+
+    let options = new RequestOptions({
+      headers: headers,
+      body: body
+    });
+
+    return this.http.delete(this.apiHostName + "/api/Account/DeleteUser", options);
   }
 
   //used to ensure email uniqueness

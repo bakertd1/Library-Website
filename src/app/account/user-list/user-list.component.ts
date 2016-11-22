@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
+import { ModalComponent } from 'ng2-bs3-modal/ng2-bs3-modal';
 
 import { User } from '../user';
 import { AccountService } from '../account.service';
@@ -11,11 +12,23 @@ import { UserTableFilterPipe } from './usertable-filter.pipe';
 export class UserListComponent implements OnInit {
   private users: User[] = [];
 
+  //user email to delete
+  private email = "";
+
+  //error message to display in errorModal
+  private errorMessage = "";
+
   //information used by datatable
   public filterQuery = "";
   public rowsOnPage = 10;
   public sortBy = "email";
   public sortOrder = "asc";
+
+  //get reference to modal to confirm user delete
+  @ViewChild('deleteModal') deleteModal: ModalComponent;
+
+  //get reference to modal to display error messages
+  @ViewChild('errorModal') errorModal: ModalComponent;
 
   constructor(private accountService: AccountService) { }
 
@@ -29,12 +42,27 @@ export class UserListComponent implements OnInit {
 
   onDeleteClicked(email: string) {
     if(email === localStorage.getItem('userName')) {
-      alert("Don't delete your own account!!!");
+      this.errorMessage = "You can't delete your own account!";
+      this.errorModal.open();
+    } else if(email === "admin@test.com") {
+      this.errorMessage = "You cannot delete the main admin account!";
+      this.errorModal.open();
     } else {
-      alert("Deleting " + email);
+      this.email = email;
+      this.deleteModal.open();
     }
   }
 
+  onDeleteConfirmed() {
+    this.deleteModal.close();
+    this.accountService.deleteUser(this.email).subscribe(
+      response => {
+        this.users = this.users.filter(u => u.email !== this.email);
+      }
+    );
+  }
+
+  //not implemented yet
   onRevokeClicked(email: string) {
     if(email === localStorage.getItem('userName')) {
       alert("Don't revoke your own privileges!!!");
@@ -43,6 +71,7 @@ export class UserListComponent implements OnInit {
     }
   }
 
+  //not implemented yet
   onMakeAdminClicked(email: string) {
     alert("Making " + email + " an admin");
   }
