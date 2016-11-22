@@ -13,6 +13,8 @@ import { AccountValidators } from '../account.validators';
 })
 export class RegisterComponent implements OnInit {
   registerForm: FormGroup;
+
+  //references to modals to display in case of success or failure of form submission
   @ViewChild('successModal') successModal: ModalComponent;
   @ViewChild('failModal') failModal: ModalComponent;
 
@@ -30,6 +32,7 @@ export class RegisterComponent implements OnInit {
     AccountValidators.registerPasswordsShouldMatch);
   }
 
+  //async validator to make sure the email entered is unique
   shouldBeUnique(formControl: FormControl) {
     return new Promise((resolve, reject) => {
       this.accountService.checkEmail(formControl.value).subscribe(
@@ -45,14 +48,16 @@ export class RegisterComponent implements OnInit {
   }
 
   onSubmit() {
-    this.accountService.register(this.registerForm.value).subscribe(
-      response => {
-          this.successModal.open();
-        },
-        error => {
-          this.failModal.open();
-        }
-    );
+    if(this.registerForm.valid) {
+      this.accountService.register(this.registerForm.value).subscribe(
+        response => {
+            this.successModal.open();
+          },
+          error => {
+            this.failModal.open();
+          }
+      );
+    }
   }
 
   onSuccess() {

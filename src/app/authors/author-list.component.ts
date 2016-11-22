@@ -11,20 +11,26 @@ import { AuthorService } from './author.service';
   templateUrl: './author-list.component.html'
 })
 export class AuthorListComponent implements OnInit, OnDestroy { 
+  private authorId: number; //used to hold the id of the author to delete
   private authors: Author[] = [];
+  private isAdmin = false;  //used to control rendering of edit and delete buttons
+
   private subscription: Subscription;
-  private isAdmin = false;
+
+  //information used by datatable
   public filterQuery = "";
   public rowsOnPage = 10;
   public sortBy = "lastName";
   public sortOrder = "asc";
+
+  //get reference to modal to confirm author delete
   @ViewChild('modal') modal: ModalComponent;
-  private authorId: number;
 
   constructor(private authorService: AuthorService) { }
 
   ngOnInit() {
     this.authorService.getAuthors();
+    
     this.subscription = this.authorService.authorsChanged.subscribe(
       (data: Author[]) => {
         this.authors = data;

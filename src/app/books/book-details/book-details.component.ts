@@ -12,6 +12,8 @@ import { BookService } from '../book.service';
   templateUrl: './book-details.component.html'
 })
 export class BookDetailsComponent implements OnInit, OnDestroy {
+  private subscription: Subscription;
+  
   private id: number;
   private book: Book = {
     title: "",
@@ -26,14 +28,15 @@ export class BookDetailsComponent implements OnInit, OnDestroy {
     publicationDate: new Date(),
     numberOfPages: 0
   };
-  private subscription: Subscription;
 
   constructor(private bookService: BookService,
               private authorService: AuthorService,
               private activatedRoute: ActivatedRoute) { }
 
   ngOnInit() {
+    //get the id of the book from the url
     this.id = this.activatedRoute.snapshot.params['id'];
+
     this.bookService.getBook(this.id);
     this.subscription = this.bookService.booksChanged.subscribe(
       (data: Book) => {
@@ -45,5 +48,4 @@ export class BookDetailsComponent implements OnInit, OnDestroy {
   ngOnDestroy() {
     this.subscription.unsubscribe();
   }
-
 }

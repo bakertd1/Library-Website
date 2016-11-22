@@ -9,29 +9,25 @@ import { Author } from './author';
 export class AuthorService {
   private apiHostName = "https://library-api.azurewebsites.net";
   authors: Author[] = [];
-  authorsChanged = new EventEmitter();
 
+  //emit an event when the list of authors changes to trigger view update
+  authorsChanged = new EventEmitter();
 
   constructor(private http: Http) { }
 
+  //emits an event containing all authors retrieved from the api
   getAuthors() {
-    const headers = new Headers({
-      'Authorization': 'bearer ' + localStorage.getItem('access_token')
-    });
+    const headers = new Headers({ 'Authorization': 'bearer ' + localStorage.getItem('access_token') });
 
-    this.http.get(this.apiHostName + "/api/authors", { headers: headers }).map(
-      (data: Response) => data.json()
-    ).subscribe(
+    this.http.get(this.apiHostName + "/api/authors", { headers: headers }).map((data: Response) => data.json()).subscribe(
       (data: Author[]) => {
         this.authors = data;
 
         for(var i = 0; i < this.authors.length; i++) {
-          let bdate = new Date(this.authors[i].birthdate);
-          this.authors[i].birthdate = new Date(bdate.getUTCFullYear(), bdate.getUTCMonth(), bdate.getUTCDate(),  bdate.getUTCHours(), bdate.getUTCMinutes(), bdate.getUTCSeconds());
+          this.authors[i].birthdate = this.changeDateToUTC(this.authors[i].birthdate);
 
           if(this.authors[i].deathdate !== null) {
-            let ddate = new Date(this.authors[i].deathdate);
-            this.authors[i].deathdate = new Date(ddate.getUTCFullYear(), ddate.getUTCMonth(), ddate.getUTCDate(),  ddate.getUTCHours(), ddate.getUTCMinutes(), ddate.getUTCSeconds());
+            this.authors[i].deathdate = this.changeDateToUTC(this.authors[i].deathdate);
           }
         }
 
@@ -40,22 +36,17 @@ export class AuthorService {
     );
   }
 
+  //emits an event containing the specified author retrieved from the api
   getAuthor(id: number) {
-    const headers = new Headers({
-      'Authorization': 'bearer ' + localStorage.getItem('access_token')
-    });
+    const headers = new Headers({ 'Authorization': 'bearer ' + localStorage.getItem('access_token') });
 
-    this.http.get(this.apiHostName + "/api/authors/" + id, { headers: headers }).map(
-      (data: Response) => data.json()
-    ).subscribe(
+    this.http.get(this.apiHostName + "/api/authors/" + id, { headers: headers }).map((data: Response) => data.json()).subscribe(
       (data: Author) => {
 
-        let bdate = new Date(data.birthdate);
-          data.birthdate = new Date(bdate.getUTCFullYear(), bdate.getUTCMonth(), bdate.getUTCDate(),  bdate.getUTCHours(), bdate.getUTCMinutes(), bdate.getUTCSeconds());
+        data.birthdate = this.changeDateToUTC(data.birthdate);
 
         if(data.deathdate !== null) {
-          let ddate = new Date(data.deathdate);
-          data.deathdate = new Date(ddate.getUTCFullYear(), ddate.getUTCMonth(), ddate.getUTCDate(),  ddate.getUTCHours(), ddate.getUTCMinutes(), ddate.getUTCSeconds());
+          data.deathdate = this.changeDateToUTC(data.deathdate);
         }
 
         this.authorsChanged.emit(data);
@@ -63,26 +54,23 @@ export class AuthorService {
     )
   }
 
+  //adds a new author to the api
   addAuthor(author: Author) {
-    let bdate = new Date(author.birthdate);
-      author.birthdate = new Date(bdate.getUTCFullYear(), bdate.getUTCMonth(), bdate.getUTCDate(),  bdate.getUTCHours(), bdate.getUTCMinutes(), bdate.getUTCSeconds());
+    author.birthdate = this.changeDateToUTC(author.birthdate);
 
     if(author.deathdate !== null) {
-      let ddate = new Date(author.deathdate);
-      author.deathdate = new Date(ddate.getUTCFullYear(), ddate.getUTCMonth(), ddate.getUTCDate(),  ddate.getUTCHours(), ddate.getUTCMinutes(), ddate.getUTCSeconds());
+      author.deathdate = this.changeDateToUTC(author.deathdate);
     }
 
     const body = JSON.stringify(author);
+
     const headers = new Headers({
       'Content-Type': 'application/json',
       'Authorization': 'bearer ' + localStorage.getItem('access_token')
     });
 
-    this.http.post(this.apiHostName + "/api/authors", body, {
-      headers: headers
-    }).map( 
-      (data: Response) => data.json()
-    ).subscribe(
+    this.http.post(this.apiHostName + "/api/authors", body, { headers: headers }).map( 
+      (data: Response) => data.json()).subscribe(
       (data: Author) => {
         this.authors.push(data);
         this.authorsChanged.emit(this.authors);
@@ -90,37 +78,36 @@ export class AuthorService {
     );
   }
 
+  //updates the author in the api
   updateAuthor(author: Author) {
-    let bdate = new Date(author.birthdate);
-      author.birthdate = new Date(bdate.getUTCFullYear(), bdate.getUTCMonth(), bdate.getUTCDate(),  bdate.getUTCHours(), bdate.getUTCMinutes(), bdate.getUTCSeconds());
+    author.birthdate = this.changeDateToUTC(author.birthdate);
 
     if(author.deathdate !== null) {
-      let ddate = new Date(author.deathdate);
-      author.deathdate = new Date(ddate.getUTCFullYear(), ddate.getUTCMonth(), ddate.getUTCDate(),  ddate.getUTCHours(), ddate.getUTCMinutes(), ddate.getUTCSeconds());
+      author.deathdate = this.changeDateToUTC(author.deathdate);
     }
 
     const body = JSON.stringify(author);
+
     const headers = new Headers({
       'Content-Type': 'application/json',
       'Authorization': 'bearer ' + localStorage.getItem('access_token')
     });
 
-    this.http.put(this.apiHostName + "/api/authors/" + author.id, body, { headers: headers }).map(
-      (data: Response) => data.json()
-    ).subscribe(
+    this.http.put(this.apiHostName + "/api/authors/" + author.id, body, { headers: headers }).map((data: Response) => data.json()).subscribe(
       (data: Author) => {
-        //this.authors.find(a => a.id == author.id)[0] = data;
+
+        //delete and readd the author to get the component to reload the view
         this.authors = this.authors.filter(e => e.id !== data.id);
         this.authors.push(data);
+
         this.authorsChanged.emit(this.authors);
       }
     );
   }
 
+  //deletes book from the api by specified book id
   deleteAuthor(id: number) {
-    const headers = new Headers({
-      'Authorization': 'bearer ' + localStorage.getItem('access_token')
-    });
+    const headers = new Headers({ 'Authorization': 'bearer ' + localStorage.getItem('access_token') });
 
     this.http.delete(this.apiHostName + "/api/authors/" + id, { headers: headers }).subscribe(
       (response: Response) => {
@@ -130,4 +117,10 @@ export class AuthorService {
     );
   }
 
+  //takes a localtime date and converts it to a utc time date
+  //to prevent data inconsistencies between client and server
+  private changeDateToUTC(date: Date) {
+    let pubDate = new Date(date);
+    return new Date(pubDate.getUTCFullYear(), pubDate.getUTCMonth(), pubDate.getUTCDate(),  pubDate.getUTCHours(), pubDate.getUTCMinutes(), pubDate.getUTCSeconds());
+  }
 }

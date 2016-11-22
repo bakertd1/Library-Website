@@ -1,5 +1,6 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Router } from '@angular/router';
+import { FormGroup } from '@angular/forms';
 import { Subscription } from 'rxjs/Rx';
 
 import { RequiredIconComponent } from '../../shared/required-icon/required-icon.component';
@@ -31,9 +32,11 @@ export class AddBookComponent implements OnInit, OnDestroy {
     this.subscription.unsubscribe();
   }
 
-  onSubmit(data: Book) {
-    this.bookService.addBook(data);
-    this.router.navigate(['/books']);
+  onSubmit(form: FormGroup) {
+    if(form.valid) {
+      this.bookService.addBook(form.value);
+      this.router.navigate(['/books']);
+    }
   }
 
 }
