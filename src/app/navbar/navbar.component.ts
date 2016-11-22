@@ -13,11 +13,12 @@ import { AccountService } from '../account/account.service';
   `]
 })
 export class NavbarComponent implements OnInit, OnDestroy {
-  isCollapsed: boolean = true;
-  isLoggedIn: boolean = false;
-  isAdmin: boolean = false;
+  isCollapsed: boolean = true;  //used to determine if collapsable menus are collapsed by default
+  isLoggedIn: boolean = false;  //used to control navigation options based on whether the user is logged in or not
+  isAdmin: boolean = false; //used to control navigation options based on whether the user is an admin or not
+  username: string = localStorage.getItem('userName');  //used to display the user's username if logged in
+
   private subscription: Subscription;
-  username: string = localStorage.getItem('userName');
 
   constructor(private accountService: AccountService) { }
 
@@ -25,7 +26,9 @@ export class NavbarComponent implements OnInit, OnDestroy {
     this.subscription = this.accountService.isLoggedIn.subscribe(
       (data: boolean) => {
         this.isLoggedIn = data;
+
         this.username = localStorage.getItem('userName');
+        
         if(localStorage.getItem('is_admin') === 'true') {
           this.isAdmin = true;
         } else {

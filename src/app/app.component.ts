@@ -11,10 +11,7 @@ export class AppComponent implements OnInit {
   constructor(private bookService: BookService, private authorService: AuthorService) { }
   
   ngOnInit() {
-    //prepopulate array of books and authors for each component to use
-    this.bookService.getBooks();
-    this.authorService.getAuthors();
-
+    //remove account information
     localStorage.removeItem('access_token');
     localStorage.removeItem('expires_in');
     localStorage.removeItem('token_type');

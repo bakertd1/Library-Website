@@ -12,6 +12,8 @@ import { BookService } from '../../books/book.service';
   templateUrl: './author-details.component.html'
 })
 export class AuthorDetailsComponent implements OnInit, OnDestroy {
+  private subscription: Subscription;
+  
   private id: number;
   private books: Book[] = [];
   private author: Author = {
@@ -20,19 +22,22 @@ export class AuthorDetailsComponent implements OnInit, OnDestroy {
     birthdate: new Date(),
     deathdate: new Date()
   };
-  private subscription: Subscription;
 
   constructor(private authorService: AuthorService, 
               private bookService: BookService, 
               private activatedRoute: ActivatedRoute) { }
 
   ngOnInit() {
+    //get the id of the author from the url
     this.id = this.activatedRoute.snapshot.params['id'];
+
     this.authorService.getAuthor(this.id);
     this.subscription = this.authorService.authorsChanged.subscribe(
       (data: Author) => {
         this.author = data;
         this.bookService.getBooks();
+
+        //populate books with all the books that were written by the selected author
         this.books = this.bookService.books.filter(b => b.authorId === data.id);
       }
     );

@@ -8,7 +8,8 @@ export class AuthorTableFilterPipe implements PipeTransform {
 
     transform(array: any[], query: string): any {
         if (query) {
-            return _.filter(array, row=>row.firstName.toLowerCase().indexOf(query.toLowerCase()) > -1 || row.lastName.toLowerCase().indexOf(query.toLowerCase()) > -1);
+            return _.filter(array, row=>row.firstName.toLowerCase().indexOf(query.toLowerCase()) > -1 
+                                        || row.lastName.toLowerCase().indexOf(query.toLowerCase()) > -1);
         }
         return array;
     }
