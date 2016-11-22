@@ -17,7 +17,7 @@ export class AuthorService {
 
   //emits an event containing all authors retrieved from the api
   getAuthors() {
-    const headers = new Headers({ 'Authorization': 'bearer ' + localStorage.getItem('access_token') });
+    const headers = new Headers({ 'Authorization': localStorage.getItem('token_type') + ' ' + localStorage.getItem('access_token') });
 
     this.http.get(this.apiHostName + "/api/authors", { headers: headers }).map((data: Response) => data.json()).subscribe(
       (data: Author[]) => {
@@ -38,7 +38,7 @@ export class AuthorService {
 
   //emits an event containing the specified author retrieved from the api
   getAuthor(id: number) {
-    const headers = new Headers({ 'Authorization': 'bearer ' + localStorage.getItem('access_token') });
+    const headers = new Headers({ 'Authorization': localStorage.getItem('token_type') + ' ' + localStorage.getItem('access_token') });
 
     this.http.get(this.apiHostName + "/api/authors/" + id, { headers: headers }).map((data: Response) => data.json()).subscribe(
       (data: Author) => {
@@ -66,7 +66,7 @@ export class AuthorService {
 
     const headers = new Headers({
       'Content-Type': 'application/json',
-      'Authorization': 'bearer ' + localStorage.getItem('access_token')
+      'Authorization': localStorage.getItem('token_type') + ' ' + localStorage.getItem('access_token')
     });
 
     this.http.post(this.apiHostName + "/api/authors", body, { headers: headers }).map( 
@@ -90,7 +90,7 @@ export class AuthorService {
 
     const headers = new Headers({
       'Content-Type': 'application/json',
-      'Authorization': 'bearer ' + localStorage.getItem('access_token')
+      'Authorization': localStorage.getItem('token_type') + ' ' + localStorage.getItem('access_token')
     });
 
     this.http.put(this.apiHostName + "/api/authors/" + author.id, body, { headers: headers }).map((data: Response) => data.json()).subscribe(
@@ -107,7 +107,7 @@ export class AuthorService {
 
   //deletes book from the api by specified book id
   deleteAuthor(id: number) {
-    const headers = new Headers({ 'Authorization': 'bearer ' + localStorage.getItem('access_token') });
+    const headers = new Headers({ 'Authorization': localStorage.getItem('token_type') + ' ' + localStorage.getItem('access_token') });
 
     this.http.delete(this.apiHostName + "/api/authors/" + id, { headers: headers }).subscribe(
       (response: Response) => {

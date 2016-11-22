@@ -35,6 +35,8 @@ import { ChangePasswordComponent } from './account/change-password/change-passwo
 
 import { AuthorTableFilterPipe } from './authors/authortable-filter.pipe';
 import { BookTableFilterPipe } from './books/booktable-filter.pipe';
+import { UserTableFilterPipe } from './account/user-list/usertable-filter.pipe';
+import { UserListComponent } from './account/user-list/user-list.component';
 
 @NgModule({
   declarations: [
@@ -54,7 +56,9 @@ import { BookTableFilterPipe } from './books/booktable-filter.pipe';
     EditAuthorComponent,
     ChangePasswordComponent,
     AuthorTableFilterPipe,
-    BookTableFilterPipe
+    BookTableFilterPipe,
+    UserListComponent,
+    UserTableFilterPipe
   ],
   imports: [
     BrowserModule,
