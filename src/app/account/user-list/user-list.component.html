@@ -72,3 +72,25 @@
         </table>
     </div>
 </div>
+
+<modal #deleteModal>
+    <modal-header>
+        <h4 class="modal-title">Are you sure you want to delete this user?</h4>
+    </modal-header>
+    <modal-body>
+        This action cannot be undone.
+    </modal-body>
+    <modal-footer>
+        <button type="button" class="btn btn-default" (click)="deleteModal.close()">Cancel</button>
+        <button type="button" class="btn btn-danger" (click)="onDeleteConfirmed()">Delete</button>
+    </modal-footer>
+</modal>
+
+<modal #errorModal>
+    <modal-header>
+        <h4 class="modal-title">{{ errorMessage }}</h4>
+    </modal-header>
+    <modal-footer>
+        <button type="button" class="btn btn-primary" (click)="errorModal.close()">Ok</button>
+    </modal-footer>
+</modal>
