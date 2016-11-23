@@ -30,6 +30,12 @@ export class UserListComponent implements OnInit {
   //get reference to modal to display error messages
   @ViewChild('errorModal') errorModal: ModalComponent;
 
+  //get reference to modal to confirm revoke admin privileges
+  @ViewChild('revokeModal') revokeModal: ModalComponent;
+
+  //get reference to modal to confirm make user admin
+  @ViewChild('makeAdminModal') makeAdminModal: ModalComponent;
+
   constructor(private accountService: AccountService) { }
 
   ngOnInit() {
@@ -65,15 +71,31 @@ export class UserListComponent implements OnInit {
   //not implemented yet
   onRevokeClicked(email: string) {
     if(email === localStorage.getItem('userName')) {
-      alert("Don't revoke your own privileges!!!");
+      this.errorMessage = "You can't revoke your own privileges!";
+      this.errorModal.open();
+    } else if(email === "admin@test.com") {
+      this.errorMessage = "You can't revoke the privileges of this user!";
+      this.errorModal.open();
     } else {
-      alert("Revoking admin privileges from " + email);
+      this.email = email;
+      this.revokeModal.open();
     }
+  }
+
+  onRevokeConfirmed() {
+    this.revokeModal.close();
+    alert("Revoking!");
   }
 
   //not implemented yet
   onMakeAdminClicked(email: string) {
-    alert("Making " + email + " an admin");
+    this.email = email;
+    this.makeAdminModal.open();
+  }
+
+  onMakeAdminConfirmed() {
+    this.makeAdminModal.close();
+    alert("Making admin!");
   }
 
 }

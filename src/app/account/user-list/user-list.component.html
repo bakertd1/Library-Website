@@ -86,6 +86,26 @@
     </modal-footer>
 </modal>
 
+<modal #revokeModal>
+    <modal-header>
+        <h4 class="modal-title">Are you sure you want to revoke this user's admin privileges?</h4>
+    </modal-header>
+    <modal-footer>
+        <button type="button" class="btn btn-default" (click)="revokeModal.close()">Cancel</button>
+        <button type="button" class="btn btn-danger" (click)="onRevokeConfirmed()">Revoke</button>
+    </modal-footer>
+</modal>
+
+<modal #makeAdminModal>
+    <modal-header>
+        <h4 class="modal-title">Are you sure you want to make this user an admin?</h4>
+    </modal-header>
+    <modal-footer>
+        <button type="button" class="btn btn-default" (click)="makeAdminModal.close()">Cancel</button>
+        <button type="button" class="btn btn-primary" (click)="onMakeAdminConfirmed()">Make Admin</button>
+    </modal-footer>
+</modal>
+
 <modal #errorModal>
     <modal-header>
         <h4 class="modal-title">{{ errorMessage }}</h4>
