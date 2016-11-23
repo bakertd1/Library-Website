@@ -1,4 +1,5 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
+import { Response } from '@angular/http';
 import { ModalComponent } from 'ng2-bs3-modal/ng2-bs3-modal';
 
 import { User } from '../user';
@@ -68,7 +69,6 @@ export class UserListComponent implements OnInit {
     );
   }
 
-  //not implemented yet
   onRevokeClicked(email: string) {
     if(email === localStorage.getItem('userName')) {
       this.errorMessage = "You can't revoke your own privileges!";
@@ -84,10 +84,17 @@ export class UserListComponent implements OnInit {
 
   onRevokeConfirmed() {
     this.revokeModal.close();
-    alert("Revoking!");
+    this.accountService.revokeAdmin(this.email).subscribe(
+      (response: Response) => {
+        this.accountService.getUsers().subscribe(
+          (users: User[]) => {
+            this.users = users;
+          }
+        );
+      }
+    );
   }
 
-  //not implemented yet
   onMakeAdminClicked(email: string) {
     this.email = email;
     this.makeAdminModal.open();
@@ -95,7 +102,15 @@ export class UserListComponent implements OnInit {
 
   onMakeAdminConfirmed() {
     this.makeAdminModal.close();
-    alert("Making admin!");
+    this.accountService.makeAdmin(this.email).subscribe(
+      (response: Response) => {
+        this.accountService.getUsers().subscribe(
+          (users: User[]) => {
+            this.users = users;
+          }
+        );
+      }
+    );
   }
 
 }

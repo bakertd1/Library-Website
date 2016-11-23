@@ -63,6 +63,28 @@ export class AccountService {
     return this.http.delete(this.apiHostName + "/api/Account/DeleteUser", options);
   }
 
+  makeAdmin(email: string) {
+    let body = JSON.stringify(email);
+
+    let headers = new Headers({
+      'Content-Type': 'application/json',
+      'Authorization': localStorage.getItem('token_type') + ' ' + localStorage.getItem('access_token')
+    });
+
+    return this.http.post(this.apiHostName + "/api/Account/MakeUserAdmin", body, { headers: headers });
+  }
+
+  revokeAdmin(email: string) {
+    let body = JSON.stringify(email);
+
+    let headers = new Headers({
+      'Content-Type': 'application/json',
+      'Authorization': localStorage.getItem('token_type') + ' ' + localStorage.getItem('access_token')
+    });
+
+    return this.http.post(this.apiHostName + "/api/Account/RevokeAdmin", body, { headers: headers });
+  }
+
   //used to ensure email uniqueness
   //send email to the api
   //api responds with true if that user already exists 
