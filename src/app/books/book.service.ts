@@ -6,7 +6,8 @@ import { Book } from './book';
 
 @Injectable()
 export class BookService {
-  private apiHostName = "https://library-api.azurewebsites.net";
+  //private apiHostName = "https://library-api.azurewebsites.net";
+  private apiHostName = "http://localhost:50010/";
   books: Book[] = [];
 
   //emit an event when the list of books changes to trigger view update
@@ -64,6 +65,9 @@ export class BookService {
       (data: Book) => {
         this.books.push(data);
         this.booksChanged.emit(this.books);
+      },
+      error => {
+        alert(error.json().message);
       }
     );
   }
@@ -89,6 +93,9 @@ export class BookService {
         this.books.push(data);
 
         this.booksChanged.emit(this.books);
+      },
+      error => {
+        alert(error.json().message);
       }
     );
   }
@@ -105,6 +112,9 @@ export class BookService {
         this.books = this.books.filter(e => e.id !== id);
 
         this.booksChanged.emit(this.books);
+      },
+      error => {
+        alert(error.json().message);
       }
     );
   }

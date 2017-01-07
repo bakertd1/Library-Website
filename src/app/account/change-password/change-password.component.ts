@@ -11,7 +11,11 @@ import { AccountValidators } from '../account.validators';
   templateUrl: './change-password.component.html'
 })
 export class ChangePasswordComponent implements OnInit {
+  //error message to display in failModal
+  private errorMessage = "";
+  
   changePasswordForm: FormGroup;
+
   @ViewChild('successModal') successModal: ModalComponent;
   @ViewChild('failModal') failModal: ModalComponent;
 
@@ -29,7 +33,15 @@ export class ChangePasswordComponent implements OnInit {
     if(this.changePasswordForm.valid) {
       this.accountService.changePassword(this.changePasswordForm.value).subscribe(
         response => this.successModal.open(),
-        error => this.failModal.open()
+        error => {
+
+          if(error.message === "This user cannot make changes to the database!") {
+            this.errorMessage = error.message;
+          } else {
+            this.errorMessage = "Old Password is incorrect!";
+          }
+          this.failModal.open();
+        }
       );
     }
   }

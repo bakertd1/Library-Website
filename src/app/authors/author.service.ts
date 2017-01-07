@@ -7,7 +7,8 @@ import { Author } from './author';
 
 @Injectable()
 export class AuthorService {
-  private apiHostName = "https://library-api.azurewebsites.net";
+  //private apiHostName = "https://library-api.azurewebsites.net";
+  private apiHostName = "http://localhost:50010/";
   authors: Author[] = [];
 
   //emit an event when the list of authors changes to trigger view update
@@ -74,6 +75,9 @@ export class AuthorService {
       (data: Author) => {
         this.authors.push(data);
         this.authorsChanged.emit(this.authors);
+      },
+      error => {
+        alert(error.json().message);
       }
     );
   }
@@ -101,6 +105,9 @@ export class AuthorService {
         this.authors.push(data);
 
         this.authorsChanged.emit(this.authors);
+      },
+      error => {
+        alert(error.json().message);
       }
     );
   }
@@ -113,6 +120,9 @@ export class AuthorService {
       (response: Response) => {
         this.authors = this.authors.filter(e => e.id !== id);
         this.authorsChanged.emit(this.authors);
+      },
+      error => {
+        alert(error.json().message);
       }
     );
   }

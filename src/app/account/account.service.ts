@@ -2,10 +2,12 @@ import { Injectable, EventEmitter } from '@angular/core';
 import { Router } from '@angular/router';
 import { Http, Response, Headers, RequestOptions } from '@angular/http';
 import { FormGroup, FormControl } from '@angular/forms';
+import { Observable } from 'rxjs/Rx';
 
 @Injectable()
 export class AccountService {
-  private apiHostName = "https://library-api.azurewebsites.net";
+  //private apiHostName = "https://library-api.azurewebsites.net";
+  private apiHostName = "http://localhost:50010/";
 
   //emit an event when the user logs out
   isLoggedIn = new EventEmitter();
@@ -60,7 +62,9 @@ export class AccountService {
       body: body
     });
 
-    return this.http.delete(this.apiHostName + "/api/Account/DeleteUser", options);
+    return this.http.delete(this.apiHostName + "/api/Account/DeleteUser", options).catch(response => {
+      return Observable.throw(response.json());
+    });
   }
 
   makeAdmin(email: string) {
@@ -71,7 +75,9 @@ export class AccountService {
       'Authorization': localStorage.getItem('token_type') + ' ' + localStorage.getItem('access_token')
     });
 
-    return this.http.post(this.apiHostName + "/api/Account/MakeUserAdmin", body, { headers: headers });
+    return this.http.post(this.apiHostName + "/api/Account/MakeUserAdmin", body, { headers: headers }).catch(response => {
+      return Observable.throw(response.json());
+    });
   }
 
   revokeAdmin(email: string) {
@@ -82,7 +88,9 @@ export class AccountService {
       'Authorization': localStorage.getItem('token_type') + ' ' + localStorage.getItem('access_token')
     });
 
-    return this.http.post(this.apiHostName + "/api/Account/RevokeAdmin", body, { headers: headers });
+    return this.http.post(this.apiHostName + "/api/Account/RevokeAdmin", body, { headers: headers }).catch(response => {
+      return Observable.throw(response.json());
+    });
   }
 
   //used to ensure email uniqueness
@@ -105,7 +113,9 @@ export class AccountService {
       'Authorization': localStorage.getItem('token_type') + ' ' + localStorage.getItem('access_token')
     });
 
-    return this.http.post(this.apiHostName + "/api/Account/ChangePassword", body, { headers: headers });
+    return this.http.post(this.apiHostName + "/api/Account/ChangePassword", body, { headers: headers }).catch(response => {
+      return Observable.throw(response.json());
+    });
   }
 
   //removes token information from local storage logs the user out

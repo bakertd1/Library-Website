@@ -82,7 +82,7 @@
     </modal-body>
     <modal-footer>
         <button type="button" class="btn btn-default" (click)="deleteModal.close()">Cancel</button>
-        <button type="button" class="btn btn-danger" (click)="onDeleteConfirmed()">Delete</button>
+        <button type="submit" class="btn btn-danger" (click)="onDeleteConfirmed()">Delete</button>
     </modal-footer>
 </modal>
 
@@ -92,7 +92,7 @@
     </modal-header>
     <modal-footer>
         <button type="button" class="btn btn-default" (click)="revokeModal.close()">Cancel</button>
-        <button type="button" class="btn btn-danger" (click)="onRevokeConfirmed()">Revoke</button>
+        <button type="submit" class="btn btn-danger" (click)="onRevokeConfirmed()">Revoke</button>
     </modal-footer>
 </modal>
 
@@ -102,7 +102,7 @@
     </modal-header>
     <modal-footer>
         <button type="button" class="btn btn-default" (click)="makeAdminModal.close()">Cancel</button>
-        <button type="button" class="btn btn-primary" (click)="onMakeAdminConfirmed()">Make Admin</button>
+        <button type="submit" class="btn btn-primary" (click)="onMakeAdminConfirmed()">Make Admin</button>
     </modal-footer>
 </modal>
 
@@ -111,6 +111,6 @@
         <h4 class="modal-title">{{ errorMessage }}</h4>
     </modal-header>
     <modal-footer>
-        <button type="button" class="btn btn-primary" (click)="errorModal.close()">Ok</button>
+        <button type="submit" class="btn btn-primary" (click)="errorModal.close()">Ok</button>
     </modal-footer>
 </modal>

@@ -65,6 +65,10 @@ export class UserListComponent implements OnInit {
     this.accountService.deleteUser(this.email).subscribe(
       response => {
         this.users = this.users.filter(u => u.email !== this.email);
+      },
+      error => {
+        this.errorMessage = error.message;
+        this.errorModal.open();
       }
     );
   }
@@ -91,6 +95,10 @@ export class UserListComponent implements OnInit {
             this.users = users;
           }
         );
+      },
+      error => {
+        this.errorMessage = error.message;
+        this.errorModal.open();
       }
     );
   }
@@ -109,6 +117,10 @@ export class UserListComponent implements OnInit {
             this.users = users;
           }
         );
+      },
+      error => {
+        this.errorMessage = error.message;
+        this.errorModal.open();
       }
     );
   }
