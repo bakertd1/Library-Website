@@ -7,8 +7,8 @@ import { Author } from './author';
 
 @Injectable()
 export class AuthorService {
-  //private apiHostName = "https://library-api.azurewebsites.net";
-  private apiHostName = "http://localhost:50010/";
+  private apiHostName = "https://library-api.azurewebsites.net";
+  //private apiHostName = "http://localhost:50010/";
   authors: Author[] = [];
 
   //emit an event when the list of authors changes to trigger view update

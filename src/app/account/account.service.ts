@@ -6,8 +6,8 @@ import { Observable } from 'rxjs/Rx';
 
 @Injectable()
 export class AccountService {
-  //private apiHostName = "https://library-api.azurewebsites.net";
-  private apiHostName = "http://localhost:50010/";
+  private apiHostName = "https://library-api.azurewebsites.net";
+  //private apiHostName = "http://localhost:50010/";
 
   //emit an event when the user logs out
   isLoggedIn = new EventEmitter();

@@ -6,8 +6,8 @@ import { Book } from './book';
 
 @Injectable()
 export class BookService {
-  //private apiHostName = "https://library-api.azurewebsites.net";
-  private apiHostName = "http://localhost:50010/";
+  private apiHostName = "https://library-api.azurewebsites.net";
+  //private apiHostName = "http://localhost:50010/";
   books: Book[] = [];
 
   //emit an event when the list of books changes to trigger view update
