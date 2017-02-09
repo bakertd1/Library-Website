@@ -2,8 +2,8 @@ import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpModule } from '@angular/http';
-import { DropdownModule } from 'ng2-bootstrap/ng2-bootstrap';
-import { CollapseModule } from 'ng2-bootstrap/ng2-bootstrap';
+import { DropdownModule } from 'ng2-bootstrap';
+import { CollapseModule } from 'ng2-bootstrap';
 import { DataTableModule } from 'angular2-datatable';
 import { Ng2Bs3ModalModule } from 'ng2-bs3-modal/ng2-bs3-modal';
 import 'lodash';
@@ -65,7 +65,7 @@ import { UserListComponent } from './account/user-list/user-list.component';
     FormsModule,
     ReactiveFormsModule,
     HttpModule,
-    DropdownModule,
+    DropdownModule.forRoot(),
     CollapseModule,
     DataTableModule,
     Ng2Bs3ModalModule,
