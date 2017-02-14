@@ -4,124 +4,108 @@ import { Http, Response, Headers, RequestOptions } from '@angular/http';
 import { FormGroup, FormControl } from '@angular/forms';
 import { Observable } from 'rxjs/Rx';
 
+export class UserLogin {
+  client_id: String;
+  connection: String;
+  grant_type: String;
+  username: String;
+  password: String;
+  scope: String;
+}
+
+export class UserRegister {
+  client_id: String;
+  email: String;
+  password: String;
+  connection: String;
+}
+
+export class ChangePassword {
+  client_id: String;
+  email: String;
+  connection: String;
+}
+
 @Injectable()
 export class AccountService {
-  private apiHostName = "https://library-api.azurewebsites.net";
-  //private apiHostName = "http://localhost:50010/";
+  private apiHostName = "https://bakertd1.auth0.com";
+  private clientID = "2D5HKUELTp8IQpdE5b02NeDuqioldQcn";
+  private connectionType = "Username-Password-Authentication";
 
   //emit an event when the user logs out
   isLoggedIn = new EventEmitter();
 
   constructor(private router: Router, private http: Http) { }
 
-  //sends user credentials to api and returns a token if successful
+  //sends user credentials to Auth0 and returns a token if successful
   login(credentials) {
-    let url = this.apiHostName + "/token";
+    let url = this.apiHostName + "/oauth/ro";
 
-    let body = "grant_type=password" + "&username=" + credentials.username + "&password=" + credentials.password;
+    let userLogin = new UserLogin();
+    userLogin.client_id = this.clientID;
+    userLogin.connection = this.connectionType;
+    userLogin.grant_type = "password";
+    userLogin.username = credentials.username;
+    userLogin.password = credentials.password;
+    userLogin.scope = "openid profile email";
 
-    let headers = new Headers({
-      'Content-Type': 'application/x-www-form-urlencoded',
-      'Accept': 'application/json'
-    });
 
-    let options = new RequestOptions({ headers: headers });
-
-    return this.http.post(url, body, options);
-  }
-
-  //sends user registration information to api
-  register(registration) {
-    let body = JSON.stringify(registration);
+    let body = JSON.stringify(userLogin);
 
     let headers = new Headers({
       'Content-Type': 'application/json'
     });
 
-    return this.http.post(this.apiHostName + "/api/Account/Register", body, { headers: headers });
+    let options = new RequestOptions({ headers: headers });
+    
+    return this.http.post(url, body, options);
   }
 
-  //gets a list of users from the api
-  getUsers() {
-    const headers = new Headers({ 'Authorization': localStorage.getItem('token_type') + ' ' + localStorage.getItem('access_token') });
+  //sends user registration information to api
+  register(registration) {
+    let userRegister = new UserRegister();
+    userRegister.client_id = this.clientID;
+    userRegister.email = registration.email;
+    userRegister.password = registration.password;
+    userRegister.connection = this.connectionType;
 
-    return this.http.get(this.apiHostName + "/api/Account/GetUsers", { headers: headers }).map((data: Response) => data.json());
-  }
-
-  //deletes the specified user
-  deleteUser(email: string) {
-    let body = JSON.stringify(email);
+    let body = JSON.stringify(userRegister);
 
     let headers = new Headers({
-      'Content-Type': 'application/json',
-      'Authorization': localStorage.getItem('token_type') + ' ' + localStorage.getItem('access_token')
+      'Content-Type': 'application/json'
     });
 
-    let options = new RequestOptions({
-      headers: headers,
-      body: body
-    });
-
-    return this.http.delete(this.apiHostName + "/api/Account/DeleteUser", options).catch(response => {
-      return Observable.throw(response.json());
-    });
+    return this.http.post(this.apiHostName + "/dbconnections/signup", body, { headers: headers });
   }
 
-  makeAdmin(email: string) {
-    let body = JSON.stringify(email);
-
-    let headers = new Headers({
-      'Content-Type': 'application/json',
-      'Authorization': localStorage.getItem('token_type') + ' ' + localStorage.getItem('access_token')
+  isAdmin() {
+    let header = new Headers({
+      'Authorization': localStorage.getItem("token_type") + ' ' + localStorage.getItem("access_token")
     });
 
-    return this.http.post(this.apiHostName + "/api/Account/MakeUserAdmin", body, { headers: headers }).catch(response => {
-      return Observable.throw(response.json());
-    });
-  }
-
-  revokeAdmin(email: string) {
-    let body = JSON.stringify(email);
-
-    let headers = new Headers({
-      'Content-Type': 'application/json',
-      'Authorization': localStorage.getItem('token_type') + ' ' + localStorage.getItem('access_token')
-    });
-
-    return this.http.post(this.apiHostName + "/api/Account/RevokeAdmin", body, { headers: headers }).catch(response => {
-      return Observable.throw(response.json());
-    });
-  }
-
-  //used to ensure email uniqueness
-  //send email to the api
-  //api responds with true if that user already exists 
-  //or false if that user does not already exist
-  checkEmail(email: string) {
-    let url = this.apiHostName + "/api/Account/UsernameExists";
-    let body = JSON.stringify(email);
-    let headers = new Headers({ 'Content-Type': 'application/json' });
-
-    return this.http.post(url, body, { headers: headers });
+    return this.http.get(this.apiHostName + "/userinfo", { headers: header });
   }
 
   //Makes a request to the api to change user's password
-  changePassword(changePasswordBindingModel) {
-    let body = JSON.stringify(changePasswordBindingModel);
+  changePassword(email: String) {
+    let changePassword = new ChangePassword();
+    changePassword.client_id = this.clientID;
+    changePassword.email = email;
+    changePassword.connection = this.connectionType;
+
+    let body = JSON.stringify(changePassword);
     const headers = new Headers({
-      'Content-Type': 'application/json',
-      'Authorization': localStorage.getItem('token_type') + ' ' + localStorage.getItem('access_token')
+      'Content-Type': 'application/json'
     });
 
-    return this.http.post(this.apiHostName + "/api/Account/ChangePassword", body, { headers: headers }).catch(response => {
+    return this.http.post(this.apiHostName + "/dbconnections/change_password", body, { headers: headers }).catch(response => {
       return Observable.throw(response.json());
     });
   }
 
   //removes token information from local storage logs the user out
   logout() {
-    localStorage.removeItem('access_token');
-    localStorage.removeItem('expires_in');
+    localStorage.removeItem('id_token');
     localStorage.removeItem('token_type');
     localStorage.removeItem('userName');
     localStorage.removeItem('is_admin');

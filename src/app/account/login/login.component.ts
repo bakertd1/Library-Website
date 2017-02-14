@@ -20,25 +20,36 @@ export class LoginComponent {
       this.accountService.login(form.value).subscribe(
         response => {
 
-          //determine if user is an admin or not
-          if(response.json().role === 'admin') {
-            localStorage.setItem('is_admin', "true");
-          } else {
-            localStorage.setItem('is_admin', "false");
-          }
-
+          localStorage.setItem('id_token', response.json().id_token);
           localStorage.setItem('access_token', response.json().access_token);
-          localStorage.setItem('expires_in', response.json().expires_in);
           localStorage.setItem('token_type', response.json().token_type);
-          localStorage.setItem('userName', response.json().userName);
 
-          this.accountService.isLoggedIn.emit(true);
-          this.router.navigate(['/']);
+          this.accountService.isAdmin().subscribe(
+      response => {
+        let roles = response.json().roles
+
+        if(roles.includes("admin")) {
+            localStorage.setItem('is_admin', "true");
+        } else {
+          localStorage.setItem('is_admin', "false");
+        }
+
+        localStorage.setItem('userName', response.json().email);
+
+        this.accountService.isLoggedIn.emit(true);
+        this.router.navigate(['/']);
+      },
+      error => {
+        console.log(error.message);
+      }
+    );
         },
         error => {
           this.modal.open();
         }
       );
     }
+
+    
   }
 }

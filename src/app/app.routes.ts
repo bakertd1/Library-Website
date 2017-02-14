@@ -12,7 +12,6 @@ import { EditAuthorComponent } from './authors/edit-author/edit-author.component
 import { LoginComponent } from './account/login/login.component';
 import { RegisterComponent } from './account/register/register.component';
 import { ChangePasswordComponent } from './account/change-password/change-password.component';
-import { UserListComponent } from './account/user-list/user-list.component';
 import { AccountGuard } from './account/account.guard';
 import { AdminGuard } from './account/admin.guard';
 
@@ -26,8 +25,7 @@ const APP_ROUTES: Routes = [
     { path: 'authors/new', component: AddAuthorComponent, canActivate: [AdminGuard, AccountGuard] },
     { path: 'authors/details/:id', component: AuthorDetailsComponent, canActivate: [AccountGuard] },
     { path: 'authors/edit/:id', component: EditAuthorComponent, canActivate: [AdminGuard, AccountGuard] },
-    { path: 'newPassword', component: ChangePasswordComponent, canActivate: [AccountGuard] },
-    { path: 'users', component: UserListComponent, canActivate: [AdminGuard, AccountGuard] },
+    { path: 'newPassword', component: ChangePasswordComponent },
     { path: 'register', component: RegisterComponent },
     { path: 'login', component: LoginComponent },
     { path: '**', redirectTo: '' }
