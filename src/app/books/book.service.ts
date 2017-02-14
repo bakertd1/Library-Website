@@ -6,8 +6,7 @@ import { Book } from './book';
 
 @Injectable()
 export class BookService {
-  private apiHostName = "https://library-api.azurewebsites.net";
-  //private apiHostName = "http://localhost:50010/";
+  private apiHostName = "http://localhost:55783";
   books: Book[] = [];
 
   //emit an event when the list of books changes to trigger view update
@@ -17,7 +16,7 @@ export class BookService {
 
   //emits an event containing all books retrieved from the api
   getBooks() {
-    const headers = new Headers({ 'Authorization': localStorage.getItem('token_type') + ' ' + localStorage.getItem('access_token') });
+    const headers = new Headers({ 'Authorization': localStorage.getItem('token_type') + ' ' + localStorage.getItem('id_token') });
 
     this.http.get(this.apiHostName + "/api/books", { headers: headers }).map((data: Response) => data.json()).subscribe(
       (data: Book[]) => {
@@ -37,7 +36,7 @@ export class BookService {
 
   //emits an event containing the specified book retrieved from the api
   getBook(id: number) {
-    const headers = new Headers({ 'Authorization': localStorage.getItem('token_type') + ' ' + localStorage.getItem('access_token') });
+    const headers = new Headers({ 'Authorization': localStorage.getItem('token_type') + ' ' + localStorage.getItem('id_token') });
 
     this.http.get(this.apiHostName + "/api/books/" + id, { headers: headers }).map((data: Response) => data.json()).subscribe(
       (data: Book) => {
@@ -57,7 +56,7 @@ export class BookService {
 
     const headers = new Headers({
       'Content-Type': 'application/json',
-      'Authorization': localStorage.getItem('token_type') + ' ' + localStorage.getItem('access_token')
+      'Authorization': localStorage.getItem('token_type') + ' ' + localStorage.getItem('id_token')
     });
 
     this.http.post(this.apiHostName + "/api/books", body, { headers: headers }).map(
@@ -80,7 +79,7 @@ export class BookService {
 
     const headers = new Headers({
       'Content-Type': 'application/json',
-      'Authorization': localStorage.getItem('token_type') + ' ' + localStorage.getItem('access_token')
+      'Authorization': localStorage.getItem('token_type') + ' ' + localStorage.getItem('id_token')
     });
 
     this.http.put(this.apiHostName + "/api/books/" + book.id, body, { headers: headers }).map(
@@ -103,7 +102,7 @@ export class BookService {
   //deletes book from the api by specified book id
   deleteBook(id: number) {
     const headers = new Headers({
-      'Authorization': localStorage.getItem('token_type') + ' ' + localStorage.getItem('access_token')
+      'Authorization': localStorage.getItem('token_type') + ' ' + localStorage.getItem('id_token')
     });
 
     this.http.delete(this.apiHostName + "/api/books/" + id, { headers: headers }).subscribe(

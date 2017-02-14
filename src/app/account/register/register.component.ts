@@ -25,7 +25,7 @@ export class RegisterComponent implements OnInit {
       email: new FormControl('', [
                                     Validators.required, 
                                     Validators.pattern("^[-a-z0-9~!$%^&*_=+}{\'?]+(\.[-a-z0-9~!$%^&*_=+}{\'?]+)*@([a-z0-9_][-a-z0-9_]*(\.[-a-z0-9_]+[a-z][a-z])|([0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}))(:[0-9]{1,5})?$")],
-                                    this.shouldBeUnique.bind(this)),
+                            ),
       password: new FormControl('', [Validators.required, Validators.pattern("^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,}$")]),
       confirmPassword: new FormControl('', [Validators.required])
     },
@@ -33,7 +33,7 @@ export class RegisterComponent implements OnInit {
   }
 
   //async validator to make sure the email entered is unique
-  shouldBeUnique(formControl: FormControl) {
+  /*shouldBeUnique(formControl: FormControl) {
     return new Promise((resolve, reject) => {
       this.accountService.checkEmail(formControl.value).subscribe(
         response => {
@@ -45,7 +45,7 @@ export class RegisterComponent implements OnInit {
         }
       );
     });
-  }
+  }*/
 
   onSubmit() {
     if(this.registerForm.valid) {

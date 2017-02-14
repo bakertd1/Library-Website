@@ -17,30 +17,21 @@ export class ChangePasswordComponent implements OnInit {
   changePasswordForm: FormGroup;
 
   @ViewChild('successModal') successModal: ModalComponent;
-  @ViewChild('failModal') failModal: ModalComponent;
 
   constructor(private accountService: AccountService, private router: Router) { }
 
   ngOnInit() {
     this.changePasswordForm = new FormGroup({
-      oldPassword: new FormControl('', Validators.required),
-      newPassword: new FormControl('', [Validators.required, Validators.pattern("^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,}$")]),
-      confirmPassword: new FormControl('', [Validators.required])
-    }, AccountValidators.changePasswordsShouldMatch);
+      email: new FormControl('', Validators.required)
+    });
   }
 
   onSubmit() {
     if(this.changePasswordForm.valid) {
-      this.accountService.changePassword(this.changePasswordForm.value).subscribe(
+      this.accountService.changePassword(this.changePasswordForm.value.email).subscribe(
         response => this.successModal.open(),
-        error => {
-
-          if(error.message === "This user cannot make changes to the database!") {
-            this.errorMessage = error.message;
-          } else {
-            this.errorMessage = "Old Password is incorrect!";
-          }
-          this.failModal.open();
+        error => { 
+          console.log("something went wrong... " + error);
         }
       );
     }
